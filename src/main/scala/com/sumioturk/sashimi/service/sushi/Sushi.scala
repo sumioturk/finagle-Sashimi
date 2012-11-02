@@ -21,8 +21,6 @@ object Sushi extends App {
   StatusPrinter.print((LoggerFactory.getILoggerFactory).asInstanceOf[LoggerContext])
   val config = Eval[SashimiConfig](new File(args(0)))
   val commons = new CommonService(config)
-  val redisClient = commons.redis
-  val oAuthService = commons.twitter
 
   val handleExceptions = new HandleExceptionFilter
   val joinService = new JoinService(commons)
@@ -35,6 +33,7 @@ object Sushi extends App {
   val getUserProfileService = new GetUserProfileService(commons)
   val toggleService = new ToggleService(commons)
   val loggingFilter = new LoggingFilter(logger)
+  val cureEighthGraderService = new CureEighthGraderSyndromeService(commons)
 
   private def logWithAuth(service: Service[Request, Response]) = {
     loggingFilter andThen handleExceptions andThen authorize andThen service
@@ -54,7 +53,9 @@ object Sushi extends App {
       case Root / "update_sashimi" => logWithAuth(updateSashimiService)
       case Root / "get_user_profile" => logWithAuth(getUserProfileService)
       case Root / "toggle" => logWithAuth(toggleService)
+      case Root / "8" => logWithAuth(cureEighthGraderService)
     }
+
 
   val server: Server = ServerBuilder()
     .codec(RichHttp[Request](Http()))

@@ -23,7 +23,12 @@ class ToggleService(commons: CommonService) extends Service[Request, Response] {
           lastTweetId = user.lastTweetId,
           pass = user.pass,
           isPremium = user.isPremium,
-          isActive = if(user.isActive == 1){0}else{1},
+          isActive =
+            if (user.isActive == 1) {
+              0
+            } else {
+              1
+            },
           escapeTerm = user.escapeTerm,
           requestToken = user.requestToken,
           requestTokenSecret = user.requestTokenSecret,

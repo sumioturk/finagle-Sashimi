@@ -17,6 +17,7 @@ object Message {
   val Tweeted = "Tweeted"
   val SashimiUpdated = "Sashimi Updated"
   val InternalServerError = "Internal Server Error"
+  val PremiumOnly = "Premium Only"
 
   def toJson(s: String) = {
     val json = JObject(JField("message", JString(s)) :: Nil)

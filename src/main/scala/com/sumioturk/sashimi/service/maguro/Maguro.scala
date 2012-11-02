@@ -40,7 +40,9 @@ object Maguro extends App {
             user =>
               val twitterRequest = new OAuthRequest(Verb.GET, config.twitterApiTimelineURL)
               val accessToken = new Token(user.accessToken, user.accessTokenSecret)
-              twitterRequest.addQuerystringParameter("since_id", user.lastTweetId)
+              if (user.lastTweetId != "0") {
+                twitterRequest.addQuerystringParameter("since_id", user.lastTweetId)
+              }
               twitterRequest.addQuerystringParameter("user_id", user.twitterId)
               twitter.signRequest(accessToken, twitterRequest)
               Future(twitterRequest.send().getBody) onSuccess {

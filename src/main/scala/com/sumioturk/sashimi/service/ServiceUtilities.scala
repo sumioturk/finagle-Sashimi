@@ -14,7 +14,7 @@ object ServiceUtilities {
   def JsonResponse(json: JValue, statusCode: HttpResponseStatus): Future[Response] = {
     val response = Response(HTTP_1_1, statusCode)
     response.setContentType(contentType, contentTypeEncoding)
-    response.setContent(copiedBuffer(compact(render(json)).getBytes))
+    response.setContent(copiedBuffer(pretty(render(json)).getBytes))
     Future(response)
   }
 
