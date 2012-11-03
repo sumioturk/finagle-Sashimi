@@ -21,7 +21,7 @@ class Graduate8thGraderService(commons: CommonService) extends Service[Request, 
     val userId = request.getHeader(User.Identity)
     userRepo.resolve(userId) flatMap {
       user =>
-        if (user.is8th == 1) {
+        if (user.is8th) {
           val eighthGrader = User(
             id = user.id,
             twitterId = user.twitterId,
@@ -31,7 +31,7 @@ class Graduate8thGraderService(commons: CommonService) extends Service[Request, 
             pass = user.pass,
             isPremium = user.isPremium,
             isActive = user.isActive,
-            is8th = 0,
+            is8th = false,
             escapeTerm = user.escapeTerm,
             requestToken = user.requestToken,
             requestTokenSecret = user.requestTokenSecret,

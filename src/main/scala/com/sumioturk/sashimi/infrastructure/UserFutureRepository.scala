@@ -46,7 +46,7 @@ class UserFutureRepository(client: Client) extends FutureRepository[User] {
   def resolveAllActive = {
       resolveAll flatMap {
         users =>
-          Future(users.filter(u => u.isActive == 1))
+          Future(users.filter(_.isActive))
       }
   }
 

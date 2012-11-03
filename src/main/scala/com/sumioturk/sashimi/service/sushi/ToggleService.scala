@@ -25,10 +25,10 @@ class ToggleService(commons: CommonService) extends Service[Request, Response] {
           pass = user.pass,
           isPremium = user.isPremium,
           isActive =
-            if (user.isActive == 1) {
-              0
+            if (user.isActive) {
+              false
             } else {
-              1
+              true
             },
           escapeTerm = user.escapeTerm,
           requestToken = user.requestToken,

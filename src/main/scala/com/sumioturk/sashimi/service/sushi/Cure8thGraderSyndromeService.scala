@@ -18,11 +18,11 @@ class Cure8thGraderSyndromeService(commons: CommonService) extends Service[Reque
     val userId = request.getHeader(User.Identity)
     userRepo.resolve(userId) flatMap {
       user =>
-        if (user.isActive == 1 && user.isPremium == 1) {
+        if (user.isActive && user.isPremium) {
           val eighthGrader = User(
             id = user.id,
             twitterId = user.twitterId,
-            is8th = 1,
+            is8th = true,
             name = user.name,
             sashimi = user.sashimi,
             lastTweetId = user.lastTweetId,

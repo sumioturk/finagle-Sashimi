@@ -40,7 +40,7 @@ object Maguro extends App {
             user =>
               val twitterRequest = new OAuthRequest(Verb.GET, config.twitterApiTimelineURL)
               val accessToken = new Token(user.accessToken, user.accessTokenSecret)
-              if (user.is8th == 0) {
+              if (!user.is8th) {
                 twitterRequest.addQuerystringParameter("since_id", user.lastTweetId)
               }
               twitterRequest.addQuerystringParameter("user_id", user.twitterId)
@@ -48,7 +48,8 @@ object Maguro extends App {
               Future(twitterRequest.send().getBody) onSuccess {
                 response =>
                   val json = parse(response)
-                  if ((json \\ "id_str").children.length == 0) {
+                  if ((json \\ "error").children.length != 0) {
+                    logger.info(compact(render(json)))
                     Future.None
                   } else {
                     val sashimis: List[Sashimi] = for {
@@ -60,9 +61,17 @@ object Maguro extends App {
                     } yield Sashimi(
                         userId = user.id,
                         tweetId = tweet_id,
-                        ttl = Time.fromMilliseconds(
-                          getDateOfDisposal(created_at, user.sashimi * config.sashimiMaginification)
-                        ),
+                        ttl =
+                          if (user.is8th) {
+                            Time.now
+                          } else {
+                            Time.fromMilliseconds(
+                              getDateOfDisposal(
+                                created_at,
+                                user.sashimi * config.sashimiMaginification
+                              )
+                            )
+                          },
                         retries = 0
                       )
                     val newUser = User(

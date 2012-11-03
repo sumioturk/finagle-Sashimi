@@ -9,13 +9,13 @@ class UserTest extends org.specs2.mutable.Specification {
       val user =
         User(
           id = "id",
-          is8th = 1,
+          is8th = false,
           twitterId = "1",
           name = "name",
           pass = "pass",
           sashimi = 1L,
-          isPremium = 0,
-          isActive = 2,
+          isPremium = false,
+          isActive = false,
           escapeTerm = "",
           lastTweetId = "123123",
           requestToken = "rt",
