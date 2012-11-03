@@ -83,7 +83,7 @@ object Maguro extends App {
                       lastTweetId = if (sashimis.isEmpty) {
                         user.lastTweetId
                       } else {
-                        sashimis.maxBy(s => s.tweetId).tweetId
+                        sashimis.maxBy(_.tweetId).tweetId
                       },
                       sashimi = user.sashimi,
                       isPremium = user.isPremium,
