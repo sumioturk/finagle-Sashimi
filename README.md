@@ -22,15 +22,15 @@ Tweeting is like slicing Sashimi. You slice the bit of your thoughts, feelings a
 Following APIs are supported.
 
 - [Register new user](#register-new-user)
-- [Login](#)
-- [Logout](#)
-- [Get OAuth URL](#)
-- [Activate account](#)
-- [Update Sashimi Quality](#)
-- [Update escape-term](#)
-- [On/Off automatic deletion](#)
-- [On/Off 8th grader mode](#)
-- [Tweet via Sashimi](#)
+- [Login](#login)
+- [Logout](#logout)
+- [Get OAuth URL](#get-oauth-url)
+- [Activate account](#activate-account)
+- [Update Sashimi Quality](#update-sashimi-quality)
+- [Update escape-term](#update-escape-term)
+- [Toggle automatic deletion](#toggle-automatic-deletion)
+- [Toggle 8th grader mode](#toggle-8th-grader-mode)
+- [Tweet via Sashimi](#tweet-via-sashimi)
 
 ## Register new user
 ## Login
@@ -39,132 +39,10 @@ Following APIs are supported.
 ## Activate account
 ## Update Sashimi Quality
 ## Update escape-term
-## On/Off automatic deletion
-## On/Off 8th grader mode
+## Toggle automatic deletion
+## Toggle 8th grader mode
 ## Tweet via Sashimi
 
-
-## Register new user 
-
-
-`curl -i --data "name=sumioturk&pass=password&sashimi=15" "http://host:port/join"`
-  
-
-    HTTP/1.1 200 OK
-    Content-Type: application/json;charset=UTF-8
-    Content-Length: 351
-
-    {
-      "id":"3",
-      "twitter_id":"",
-      "name":"john",
-      "pass":"password",
-      "last_tweet_id":"",
-      "sashimi":"15",
-      "escape_term":"",
-      "is_premium":0,
-      "is_active":0,
-      "request_token":"DLSsK50ngjYmidcZP07UOi5UxhrpsyAyS2DmPm6oEg",
-      "request_token_secret":"SxkJjPQQaSENTGGbM4klMLYq5nW8VqdAJci8nUlukyA",
-      "access_token":"",
-      "access_token_secret":""
-    }  
-
-
-## Login
-
-### Login
-
-`curl -i --data "name=sumioturk&pass=password" "http://host:port/login"`
-
-    HTTP/1.1 200 OK
-    Content-Type: application/json;charset=UTF-8
-    Set-Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;
-    Content-Length: 27
-
-    {"message":"You Logged In"}
-____
-
-You should identify yourself by passing the session key given when you logged in to call rest of APIs; 
-you either pass the session key via body parameter:
-
-    curl -i --data "key=key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127 ...
-
-or cookie:
-
-    curl -i --header "Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;" ...
-
-    
-
-### Logout
-Call login API whlile you logged in.
-
-     curl -i \
-     --header "Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;" \
-     "http://host:port/login"
-
-
-
-## Get twitter OAuth URL
-  
-    curl -i \ 
-    --header "Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;" \
-    --data "name=sumioturk&pass=password" \
-    "http://host:port/oauth_url"
-
-____
-    HTTP/1.1 200 OK
-    Content-Type: application/json;charset=UTF-8
-    Content-Length: 112
- 
-    {
-      "auth_url":"https://api.twitter.com/oauth/authorize?oauth_token=VFiyIRwClQ8PRn1JmXtsJDKhNHJhck8XaZ5iT8b8g"
-    }
-
-
-
-## Activate an account via twitter OAuth 
-    
-    curl -i \
-    --header "Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;" \
-     --data "oauth_token=tokenhere&oauth_verifier=verifierhere" \
-    "http://host:port/oauth"
-
-
-## On/Off automatic deletion
-    
-    curl -i \
-    --header "Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;" \
-    "http://host:port/toggle"
-
-## Change lifetime of tweets (unit: min.)
- 
-    curl -i \
-    --header "Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;" \
-    --data "sashimi=12" "http://host:port/update_sashimi"`
-
-
-## Get the user's profile
-    
-    curl -i \
-    --header "Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;" \
-    "http://host:port/get_user_profile" 
-
-## Tweet via Sashimi
-    
-    curl -i \
-    --header "Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;" \
-    "status=Hi, I\'m Sashimi Quality!" "http://host:port/tweet"
-
-## 8th Grader Mode
-This mode is also called `厨二病モード`. This API is only available for `premium` users whose `isPremium` flag is set to `1`.  
-Once this API is called, SASHIMI will start deleting ALL tweets including tweets you tweeted before you signed up for SASHIMI. 
-Sorry, but you can NOT revert this action because it's `厨二病モード`. 
-It is unstoppable. To stop this, revoke access from SASHIMI to your twitter account manually. 
-
-    curl -i \
-    --header "Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;" \
-    "http://host:port/8" 
 
 
 # Footnote
