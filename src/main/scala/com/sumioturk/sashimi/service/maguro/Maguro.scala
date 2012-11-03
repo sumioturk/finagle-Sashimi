@@ -81,7 +81,12 @@ object Maguro extends App {
                       unfilteredSashimis.filterNot(s => if (user.escapeTerm.isEmpty) {
                         false
                       } else {
-                        s.status.contains(user.escapeTerm)
+                        user.escapeTerm.r.findFirstIn(s.status) match {
+                          case None =>
+                            false
+                          case Some(_) =>
+                            true
+                        }
                       })
 
                     val newUser = User(
