@@ -16,6 +16,7 @@ import net.liftweb.json.JsonAST.{JString, JField, JObject}
 
 class LoginService(commons: CommonService) extends Service[Request, Response] {
   val userRepo = new UserFutureRepository(commons.redis)
+  val sessionPool = new SessionPool(commons.redis)
 
   def apply(request: Request) = {
     val sessionKey = "key=(.+);".r.findFirstIn(
@@ -23,7 +24,10 @@ class LoginService(commons: CommonService) extends Service[Request, Response] {
     )
     sessionKey match {
       case Some(sk) =>
-        ExpCookieJsonResponse(JObject(JField(User.Message, JString(LoggedOut)) :: Nil), OK)
+        sessionPool.purge(sk.substring(4, sk.length - 1)) flatMap {
+         _ =>
+           ExpCookieJsonResponse(JObject(JField(User.Message, JString(LoggedOut)) :: Nil), OK)
+        }
       case None =>
         val userName = request.getParam(User.Name)
         val userPass = request.getParam(User.Pass)

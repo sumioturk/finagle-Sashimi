@@ -48,6 +48,13 @@ class SessionPool(client: Client) {
     }
   }
 
+  def purge(sessionKey: String) = {
+    redis.hDel(
+      copiedBuffer(RedisKeys.UserSessions),
+      Seq(copiedBuffer(sessionKey.getBytes))
+    )
+  }
+
   def generateSessionKey(user: User) = {
     new BASE64Encoder().encode(MessageDigest.getInstance("SHA1")
       .digest(user.toString.getBytes)) + "_" + new UUID().toString + "_" + System.currentTimeMillis.toString
