@@ -33,15 +33,36 @@ Following APIs are supported.
 - [Tweet via Sashimi](#tweet-via-sashimi)
 
 ## Register new user
+Register a new user to `SASHIMI`. 
+___
+[back](#apis)
 ## Login
+___
+[back](#apis)
 ## Logout
+___
+[back](#apis)
 ## Get OAuth URL
+___
+[back](#apis)
 ## Activate account
+___
+[back](#apis)
 ## Update Sashimi Quality
+___
+[back](#apis)
 ## Update escape-term
+___
+[back](#apis)
 ## Toggle automatic deletion
+___
+[back](#apis)
 ## Toggle 8th grader mode
+___
+[back](#apis)
 ## Tweet via Sashimi
+___
+[back](#apis)
 
 
 
