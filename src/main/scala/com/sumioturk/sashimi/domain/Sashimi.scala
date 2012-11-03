@@ -9,6 +9,7 @@ case class Sashimi
 (
   userId: String,
   tweetId: String,
+  status: String,
   ttl: Time,
   retries: Int
   ) {
@@ -16,6 +17,7 @@ case class Sashimi
     val json =
       ("user_id" -> userId) ~
         ("tweet_id" -> tweetId) ~
+        ("status" -> status) ~
         ("ttl" -> ttl.toDate.toString) ~
         ("retries" -> retries)
     json
@@ -31,12 +33,14 @@ object Sashimi {
       case JObject(List(
       JField("user_id", JString(userId)),
       JField("tweet_id", JString(tweetId)),
+      JField("status", JString(status)),
       JField("ttl", JString(ttl)),
       JField("retries", JInt(retries))
       )) =>
         Sashimi(
           userId = userId,
           tweetId = tweetId,
+          status = status,
           ttl = Time.fromMilliseconds(dateFormat.parse(ttl).getTime),
           retries = retries.toInt
         )

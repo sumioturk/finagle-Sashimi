@@ -52,16 +52,17 @@ object Maguro extends App {
                     logger.info(compact(render(json)))
                     Future.None
                   } else {
-                    val sashimis: List[Sashimi] = for {
+                    val unfilteredSashimis: List[Sashimi] = for {
                       JArray(tweets) <- json
                       JObject(tweet) <- tweets
                       JField("id_str", JString(tweet_id)) <- tweet
                       JField("created_at", JString(created_at)) <- tweet
-                      JField("status", JString(status)) <- tweet
+                      JField("text", JString(status)) <- tweet
                       JField("id_str", JString(user_id)) <- (tweet \ "user")
-                    } yield (if (!status.contains(user.escapeTerm)){Sashimi(
+                    } yield Sashimi(
                         userId = user.id,
                         tweetId = tweet_id,
+                        status = status,
                         ttl =
                           if (user.is8th) {
                             Time.now
@@ -74,7 +75,14 @@ object Maguro extends App {
                             )
                           },
                         retries = 0
-                      )}else{None.asInstanceOf[Sashimi]})
+                      )
+
+                    val sashimis =
+                      unfilteredSashimis.filterNot(s => if (user.escapeTerm.isEmpty) {
+                        false
+                      } else {
+                        s.status.contains(user.escapeTerm)
+                      })
 
                     val newUser = User(
                       id = user.id,

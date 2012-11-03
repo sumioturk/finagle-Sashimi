@@ -64,6 +64,7 @@ object Wasabi extends App {
                         logger.info("failed to delete tweet: " + sashimi.toJsonString)
                         val newSashimi = Sashimi(
                           userId = sashimi.userId,
+                           status = sashimi.status,
                           retries = sashimi.retries + 1,
                           ttl = Time.fromMilliseconds(Time.now.inMillis
                             + config.retryInterval),

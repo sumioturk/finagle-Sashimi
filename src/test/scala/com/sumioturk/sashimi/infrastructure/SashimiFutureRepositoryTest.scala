@@ -15,12 +15,14 @@ class SashimiFutureRepositoryTest extends Specification with Mockito {
   val time2 = Time.now
   val sashimi1 = Sashimi(
     tweetId = "1",
+    status = "Hi, I'm sashimi quality",
     userId = "123123123123123",
     ttl = time1,
     retries = 5
   )
   val sashimi2 = Sashimi(
     tweetId = "2",
+    status = "Hi, I'm sashimi quality",
     userId = "123123123123123",
     ttl = time2,
     retries = 5
