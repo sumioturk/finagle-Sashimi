@@ -24,7 +24,7 @@ class LoginService(commons: CommonService) extends Service[Request, Response] {
     )
     sessionKey match {
       case Some(sk) =>
-        sessionPool.purge(sk.substring(4, sk.length - 1)) flatMap {
+        sessionPool.purge(sk.substring(User.SessionKeyPrefix.length, sk.length - User.SessionKeySuffix.length)) flatMap {
          _ =>
            ExpCookieJsonResponse(JObject(JField(User.Message, JString(LoggedOut)) :: Nil), OK)
         }
