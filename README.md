@@ -129,5 +129,5 @@ ____
     "status=Hi, I\'m Sashimi Quality!" "http://host:port/tweet"
 
 
-# Features
-SASHIMI retries 
+# Footnote
+SASHIMI is the only way that you can automatically delete your tweets in damn accurate timing. Fault tolerance architecture guarantees damn certainty of elimination of every single shit you tweeted. This is indeed the only way to keep your tweets fresh and Sashimi Quality. 
