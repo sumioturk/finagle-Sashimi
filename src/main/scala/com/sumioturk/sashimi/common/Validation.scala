@@ -10,6 +10,7 @@ object Validation {
     val OAuthToken = "^.+$"
     val OAuthVerifier = "^.+$"
     val Status = ".+"
+    val NotEmpty = ".+"
 
   }
 
