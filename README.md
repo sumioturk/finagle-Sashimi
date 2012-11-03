@@ -1,4 +1,5 @@
 # SASHIMI?
+SASHIMI is a web service deleting your tweets periodically. Deleting tweets is going to be much simpler than clicking 'delete' button on twitter.com or on whatever 3rd party twitter client you are currently using. You can do following:
 
 - Specify the lifetime of your tweets with minutes accuracy
 - Delete tweets in the past
