@@ -129,9 +129,15 @@ ____
     "status=Hi, I\'m Sashimi Quality!" "http://host:port/tweet"
 
 ## 8th Grader Mode
-This mode is also called `厨二病モード`. 
+This mode is also called `厨二病モード`. This API is only available for `premium` users. 
 Once this API is called, SASHIMI will start deleting ALL tweets including tweets you tweeted before you signed up for SASHIMI. 
 Sorry, but you can NOT revert this action because it's `厨二病モード`. 
 It is unstoppable. To stop this, revoke access from SASHIMI to your twitter account manually. 
+
+    curl -i \
+    --header "Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;" \
+    "http://host:port/8" 
+
+
 # Footnote
 SASHIMI is the only way that you can automatically delete your tweets in damn accurate timing. Fault tolerance architecture guarantees damn certainty of elimination of every single shit you tweeted. This is indeed the only way to keep your tweets fresh and Sashimi Quality. 
