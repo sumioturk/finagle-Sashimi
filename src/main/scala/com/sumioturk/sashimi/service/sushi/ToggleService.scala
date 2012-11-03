@@ -18,6 +18,7 @@ class ToggleService(commons: CommonService) extends Service[Request, Response] {
         val newUser = User(
           id = user.id,
           twitterId = user.twitterId,
+          is8th = user.is8th,
           name = user.name,
           sashimi = user.sashimi,
           lastTweetId = user.lastTweetId,

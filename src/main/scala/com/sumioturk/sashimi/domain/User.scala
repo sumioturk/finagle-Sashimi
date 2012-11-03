@@ -13,6 +13,7 @@ case class User
   sashimi: Long,
   isPremium: Int,
   isActive: Int,
+  is8th: Int,
   escapeTerm: String,
   requestToken: String,
   requestTokenSecret: String,
@@ -30,6 +31,7 @@ case class User
         ("escape_term" -> escapeTerm) ~
         ("is_premium" -> isPremium) ~
         ("is_active" -> isActive) ~
+        ("is_8th" -> isActive) ~
         ("request_token" -> requestToken) ~
         ("request_token_secret" -> requestTokenSecret) ~
         ("access_token" -> accessToken) ~
@@ -53,6 +55,7 @@ object User {
       JField("escape_term", JString(escapeTerm)),
       JField("is_premium", JInt(isPremium)),
       JField("is_active", JInt(isActive)),
+      JField("is_8th", JInt(is8th)),
       JField("request_token", JString(requestToken)),
       JField("request_token_secret", JString(requestTokenSecret)),
       JField("access_token", JString(accessToken)),
@@ -68,6 +71,7 @@ object User {
           escapeTerm = escapeTerm,
           isPremium = isPremium.toInt,
           isActive = isActive.toInt,
+          is8th = is8th.toInt,
           requestToken = requestToken,
           requestTokenSecret = requestTokenSecret,
           accessToken = accessToken,

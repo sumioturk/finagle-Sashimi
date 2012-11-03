@@ -41,6 +41,7 @@ class JoinService(commons: CommonService) extends Service[Request, Response] {
                   sashimi = userSashimi.toLong,
                   isPremium = 0,
                   isActive = 0,
+                  is8th = 0,
                   lastTweetId = "",
                   requestToken = requestToken.getToken,
                   requestTokenSecret = requestToken.getSecret,

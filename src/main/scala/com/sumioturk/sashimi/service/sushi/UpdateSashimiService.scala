@@ -24,6 +24,7 @@ class UpdateSashimiService(commons: CommonService) extends Service[Request, Resp
           user =>
             val newUser = User(
               id = user.id,
+              is8th = user.is8th,
               twitterId = user.twitterId,
               name = user.name,
               sashimi = userSashimi.toLong,

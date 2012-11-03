@@ -38,6 +38,7 @@ class RegisterOAuthTokenService(commons: CommonService) extends Service[Request,
             val newUser = User(
               id = user.id,
               twitterId = userTwitterId,
+              is8th = user.is8th,
               lastTweetId = user.lastTweetId,
               name = user.name,
               pass = user.pass,

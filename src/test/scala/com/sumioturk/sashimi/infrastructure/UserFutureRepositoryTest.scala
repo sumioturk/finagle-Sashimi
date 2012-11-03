@@ -15,6 +15,7 @@ class UserFutureRepositoryTest extends Specification with Mockito {
     User(
       id = "1",
       twitterId = "1",
+      is8th = 1,
       name = "name",
       pass = "pass",
       sashimi = 1L,
@@ -31,6 +32,7 @@ class UserFutureRepositoryTest extends Specification with Mockito {
   val user2 =
     User(
       id = "2",
+      is8th = 1,
       twitterId = "1",
       name = "name",
       pass = "pass",

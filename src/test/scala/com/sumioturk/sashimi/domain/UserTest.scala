@@ -9,6 +9,7 @@ class UserTest extends org.specs2.mutable.Specification {
       val user =
         User(
           id = "id",
+          is8th = 1,
           twitterId = "1",
           name = "name",
           pass = "pass",

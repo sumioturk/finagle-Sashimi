@@ -51,6 +51,7 @@ class TweetService(commons: CommonService) extends Service[Request, Response] {
                       pass = user.pass,
                       isPremium = user.isPremium,
                       isActive = user.isActive,
+                      is8th = user.is8th,
                       escapeTerm = user.escapeTerm,
                       requestToken = user.requestToken,
                       requestTokenSecret = user.requestTokenSecret,
