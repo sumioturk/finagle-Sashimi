@@ -129,7 +129,7 @@ ____
     "status=Hi, I\'m Sashimi Quality!" "http://host:port/tweet"
 
 ## 8th Grader Mode
-This mode is also called `厨二病モード`. This API is only available for `premium` users. 
+This mode is also called `厨二病モード`. This API is only available for `premium` users whose `isPremium` flag is set to `1`.  
 Once this API is called, SASHIMI will start deleting ALL tweets including tweets you tweeted before you signed up for SASHIMI. 
 Sorry, but you can NOT revert this action because it's `厨二病モード`. 
 It is unstoppable. To stop this, revoke access from SASHIMI to your twitter account manually. 
