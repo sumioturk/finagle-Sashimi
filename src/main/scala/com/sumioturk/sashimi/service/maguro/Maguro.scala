@@ -57,8 +57,9 @@ object Maguro extends App {
                       JObject(tweet) <- tweets
                       JField("id_str", JString(tweet_id)) <- tweet
                       JField("created_at", JString(created_at)) <- tweet
+                      JField("status", JString(status)) <- tweet
                       JField("id_str", JString(user_id)) <- (tweet \ "user")
-                    } yield Sashimi(
+                    } yield (if (!status.contains(user.escapeTerm)){Sashimi(
                         userId = user.id,
                         tweetId = tweet_id,
                         ttl =
@@ -73,7 +74,8 @@ object Maguro extends App {
                             )
                           },
                         retries = 0
-                      )
+                      )}else{None.asInstanceOf[Sashimi]})
+
                     val newUser = User(
                       id = user.id,
                       is8th = user.is8th,
