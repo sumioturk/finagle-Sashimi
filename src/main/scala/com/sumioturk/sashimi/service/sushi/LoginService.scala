@@ -18,7 +18,7 @@ class LoginService(commons: CommonService) extends Service[Request, Response] {
   val userRepo = new UserFutureRepository(commons.redis)
 
   def apply(request: Request) = {
-    val sessionKey = Option(request.getHeader(User.Cookie))
+    val sessionKey = "key=(.+);".r.findFirstIn(request.getHeader(User.Cookie))
     sessionKey match {
       case Some(sk) =>
         ExpCookieJsonResponse(JObject(JField(User.Message, JString(LoggedOut)) :: Nil), OK)
