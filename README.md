@@ -1,4 +1,3 @@
-
 # SASHIMI?
 SASHIMI is a web service deleting your tweets periodically. 
 Deleting tweets is going to be much simpler than clicking 'delete' button on twitter.com 
@@ -22,11 +21,17 @@ Tweeting is like slicing Sashimi. You slice the bit of your thoughts, feelings a
 # APIs
 Following APIs are supported.
 
-- [an example](#Register new user)
-- [an example](http://example.com/ "Title")
-- [an example](http://example.com/ "Title")
-- [an example](http://example.com/ "Title")
-- [an example](http://example.com/ "Title")
+- [Register new user](#register-new-user)
+- [Login](#)
+- [Logout](#)
+- [Get OAuth URL](#)
+- [Activate account](#)
+- [Update Sashimi](#)
+- [Update escape term](#)
+- [On/Off automatic deletion](#)
+- [On/Off 8th grader mode](#)
+- [Tweet via Sashimi](#)
+
 
 ## Register new user 
 
