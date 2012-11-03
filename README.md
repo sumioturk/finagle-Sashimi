@@ -103,7 +103,7 @@ ____
     "http://host:port/oauth"
 
 
-## On/ff automatic deletion
+## On/Off automatic deletion
     
     curl -i \
     --header "Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;" \
