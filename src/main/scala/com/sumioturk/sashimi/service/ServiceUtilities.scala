@@ -30,7 +30,7 @@ object ServiceUtilities {
   def ExpCookieJsonResponse(json: JValue, statusCode: HttpResponseStatus): Future[Response] = {
     val response = Response(HTTP_1_1, statusCode)
     response.setContentType(contentType, contentTypeEncoding)
-    response.addHeader("Set-Cookie", "key=foo; expires=Tue, 1-Jan-2000 00:00:00 GMT;")
+    response.addHeader("Set-Cookie", User.SessionKeyPrefix + "foo" + User.SessionKeySuffix + "expires=Tue, 1-Jan-2000 00:00:00 GMT;")
     response.addHeader("Set-Cookie", "user=bar; expires=Tue, 1-Jan-2000 00:00:00 GMT;")
     response.setContent(copiedBuffer(compact(render(json)).getBytes))
     Future(response)

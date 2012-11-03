@@ -19,7 +19,7 @@ class AuthorizationFilter(commons: CommonService) extends SimpleFilter[Request, 
     val key = Option(User.SessionKeyPrefix + request.getParam(User.Key) + User.SessionKeySuffix)
     val skregex = User.SessionKeyRegex
     val session =
-      if (key == None)
+      if (key.exists(s => s.contains("null")))
         Option(request.getHeader(User.Cookie))
       else
         key
@@ -28,7 +28,7 @@ class AuthorizationFilter(commons: CommonService) extends SimpleFilter[Request, 
         val sk =
           skregex.findFirstIn(s) match {
             case Some(x) =>
-              x.substring(4, x.length - 1)
+              x.substring(User.SessionKeyPrefix.length, x.length - User.SessionKeySuffix.length)
             case _ =>
               User.DummyCookie
         }
