@@ -44,7 +44,8 @@ Following APIs are supported.
 
 
 ## Login
-Note that you need a session key `2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127` in a response header for the rest of API calls. 
+
+### Login
 
 `curl -i --data "name=sumioturk&pass=password" "http://host:port/login"`
 
@@ -54,6 +55,26 @@ Note that you need a session key `2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e
     Content-Length: 27
 
     {"message":"You Logged In"}
+____
+
+You should identify yourself by passing the session key given when you logged in to call rest of APIs; 
+you either pass the session key via body parameter:
+
+    curl -i --data "key=key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127 ...
+
+or cookie:
+
+    curl -i --header "Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;" ...
+
+    
+
+### Logout
+Call login API whlile you logged in.
+
+     curl -i \
+     --header "Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;" \
+     "http://host:port/login"
+
 
 
 ## Get twitter OAuth URL
@@ -107,3 +128,6 @@ ____
     --header "Cookie: key=2Fw/fRXNp6LfIUiKe0EbRJHeRdA=_82a83670-2511-11e2-8ddd-00270e020e4c_1351876791127;" \
     "status=Hi, I\'m Sashimi Quality!" "http://host:port/tweet"
 
+
+# Features
+SASHIMI retries 
