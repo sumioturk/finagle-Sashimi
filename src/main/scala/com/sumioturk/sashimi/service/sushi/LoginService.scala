@@ -12,6 +12,7 @@ import com.sumioturk.sashimi.service.ServiceUtilities._
 import com.sumioturk.sashimi.infrastructure.SessionPool
 import com.sumioturk.sashimi.common.Validation
 import com.sumioturk.sashimi.service.CommonService
+import net.liftweb.json.JsonAST.{JString, JField, JObject}
 
 class LoginService(commons: CommonService) extends Service[Request, Response] {
   val userRepo = new UserFutureRepository(commons.redis)
@@ -20,7 +21,7 @@ class LoginService(commons: CommonService) extends Service[Request, Response] {
     val sessionKey = Option(request.getHeader(User.Cookie))
     sessionKey match {
       case Some(sk) =>
-        ExpCookieJsonResponse(toJson(LoggedOut), OK)
+        ExpCookieJsonResponse(JObject(JField(User.Message, JString(LoggedOut)) :: Nil), OK)
       case None =>
         val userName = request.getParam(User.Name)
         val userPass = request.getParam(User.Pass)
@@ -43,7 +44,7 @@ class LoginService(commons: CommonService) extends Service[Request, Response] {
                         val sessionKey = sessionPool.generateSessionKey(users(0))
                         sessionPool.store(sessionKey, users(0).id)
                         SetCookieJsonResponse(
-                          toJson(LoggedIn),
+                          JObject(JField(User.SessionKey, JString(sessionKey)) :: Nil),
                           OK,
                           sessionKey,
                           users(0))

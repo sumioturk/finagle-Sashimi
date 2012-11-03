@@ -100,4 +100,6 @@ object User {
   val OAuthToken = "oauth_token"
   val OAuthVerifier = "oauth_verifier"
   val Status = "status"
+  val SessionKey = "session_key"
+  val Message = "message"
 }

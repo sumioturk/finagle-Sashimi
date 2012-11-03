@@ -20,7 +20,7 @@ object Message {
   val PremiumOnly = "Premium Only"
 
   def toJson(s: String) = {
-    val json = JObject(JField("message", JString(s)) :: Nil)
+    val json = JObject(JField("error", JString(s)) :: Nil)
     json
   }
 }

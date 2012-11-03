@@ -52,7 +52,7 @@ class RegisterOAuthTokenService(commons: CommonService) extends Service[Request,
             )
             userRepo.store(newUser) flatMap {
               _ =>
-                JsonResponse(toJson(SashimiQualityMessage), OK)
+                JsonResponse(newUser.toJson, OK)
             }
         }
       case false =>
