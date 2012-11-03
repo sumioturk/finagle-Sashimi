@@ -70,7 +70,11 @@ object Wasabi extends App {
                           tweetId = sashimi.tweetId
                         )
                         Future.join(Seq(
-                          sashimiRepo.sAdd(newSashimi),
+                          if (newSashimi.retries <= config.numberOfMaxRetries) {
+                            sashimiRepo.sAdd(newSashimi)
+                          } else {
+                            Future.None
+                          },
                           sashimiRepo.sRem(sashimi)
                         ))
                       } else {
