@@ -106,4 +106,7 @@ object User {
   val Status = "status"
   val SessionKey = "session_key"
   val Message = "message"
+  val SessionKeyPrefix = "SashimiSessionKey="
+  val SessionKeySuffix = ";"
+  val SessionKeyRegex = (SessionKeyPrefix + "(.+)" + SessionKeySuffix).r
 }

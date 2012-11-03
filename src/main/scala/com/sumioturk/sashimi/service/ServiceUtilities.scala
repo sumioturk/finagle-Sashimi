@@ -21,7 +21,7 @@ object ServiceUtilities {
   def SetCookieJsonResponse(json: JValue, statusCode: HttpResponseStatus, sessionKey: String, user: User): Future[Response] = {
     val response = Response(HTTP_1_1, statusCode)
     response.setContentType(contentType, contentTypeEncoding)
-    response.addHeader("Set-Cookie", "key=" + sessionKey + ";")
+    response.addHeader("Set-Cookie", User.SessionKeyPrefix + sessionKey + User.SessionKeySuffix)
     response.addHeader("Set-Cookie", "user=" + user.toJsonString + ";")
     response.setContent(copiedBuffer(compact(render(json)).getBytes))
     Future(response)

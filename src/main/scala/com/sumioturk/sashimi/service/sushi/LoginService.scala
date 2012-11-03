@@ -19,7 +19,7 @@ class LoginService(commons: CommonService) extends Service[Request, Response] {
   val sessionPool = new SessionPool(commons.redis)
 
   def apply(request: Request) = {
-    val sessionKey = "key=(.+);".r.findFirstIn(
+    val sessionKey = User.SessionKeyRegex.findFirstIn(
       Option(request.getHeader(User.Cookie)).getOrElse(User.DummyCookie)
     )
     sessionKey match {
