@@ -19,7 +19,7 @@ class LoginService(commons: CommonService) extends Service[Request, Response] {
 
   def apply(request: Request) = {
     val sessionKey = "key=(.+);".r.findFirstIn(
-      Option(request.getHeader(User.Cookie)).getOrElse("")
+      Option(request.getHeader(User.Cookie)).getOrElse(User.DummyCookie)
     )
     sessionKey match {
       case Some(sk) =>

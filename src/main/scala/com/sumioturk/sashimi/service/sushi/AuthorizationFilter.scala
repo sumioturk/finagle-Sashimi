@@ -16,7 +16,7 @@ class AuthorizationFilter(commons: CommonService) extends SimpleFilter[Request, 
   val userRepo = new UserFutureRepository(commons.redis)
   val sessionPool = new SessionPool(commons.redis)
   def apply(request: Request, continue: Service[Request, Response]) = {
-    val key = Option(request.getParam(User.Key))
+    val key = Option("key=" + request.getParam(User.Key) + ";")
     val skregex = """key=(.+);""".r
     val session =
       if (key == None)
