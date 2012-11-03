@@ -35,6 +35,7 @@ object Sushi extends App {
   val loggingFilter = new LoggingFilter(logger)
   val cure8thGraderService = new Cure8thGraderSyndromeService(commons)
   val graduate8thGraderService = new Graduate8thGraderService(commons)
+  val updateEscapeTermService = new UpdateEscapeTermService(commons)
 
   private def logWithAuth(service: Service[Request, Response]) = {
     loggingFilter andThen handleExceptions andThen authorize andThen service
@@ -52,6 +53,7 @@ object Sushi extends App {
       case Root / "oauth" => logWithAuth(oAuthTokenRegisterService)
       case Root / "tweet" => logWithAuth(tweetService)
       case Root / "update_sashimi" => logWithAuth(updateSashimiService)
+      case Root / "update_escape_term" => logWithAuth(updateEscapeTermService)
       case Root / "get_user_profile" => logWithAuth(getUserProfileService)
       case Root / "toggle" => logWithAuth(toggleService)
       case Root / "8" => logWithAuth(cure8thGraderService)
