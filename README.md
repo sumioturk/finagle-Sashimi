@@ -26,11 +26,22 @@ Following APIs are supported.
 - [Logout](#)
 - [Get OAuth URL](#)
 - [Activate account](#)
-- [Update Sashimi](#)
-- [Update escape term](#)
+- [Update Sashimi Quality](#)
+- [Update escape-term](#)
 - [On/Off automatic deletion](#)
 - [On/Off 8th grader mode](#)
 - [Tweet via Sashimi](#)
+
+## Register new user
+## Login
+## Logout
+## Get OAuth URL
+## Activate account
+## Update Sashimi Quality
+## Update escape-term
+## On/Off automatic deletion
+## On/Off 8th grader mode
+## Tweet via Sashimi
 
 
 ## Register new user 
