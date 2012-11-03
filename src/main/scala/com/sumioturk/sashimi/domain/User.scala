@@ -31,7 +31,7 @@ case class User
         ("escape_term" -> escapeTerm) ~
         ("is_premium" -> isPremium) ~
         ("is_active" -> isActive) ~
-        ("is_8th" -> isActive) ~
+        ("is_8th" -> is8th) ~
         ("request_token" -> requestToken) ~
         ("request_token_secret" -> requestTokenSecret) ~
         ("access_token" -> accessToken) ~
