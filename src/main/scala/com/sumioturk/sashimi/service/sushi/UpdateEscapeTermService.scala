@@ -14,10 +14,20 @@ import com.twitter.finagle.Service
 class UpdateEscapeTermService(commons: CommonService) extends Service[Request, Response] {
   val userRepo = new UserFutureRepository(commons.redis)
 
+  private def isValidRegex(s: String) = {
+    try {
+      s.r
+      true
+    } catch {
+      case e: Throwable =>
+        false
+    }
+  }
+
   def apply(request: Request) = {
     val userId = request.getHeader(User.Identity)
     val escapeTerm = request.getParam(User.EscapeTerm)
-    Validation.isValid(Rule.NotEmpty, escapeTerm) match {
+    Validation.isValid(Rule.NotEmpty, escapeTerm) && (isValidRegex(escapeTerm)) match {
       case true =>
         userRepo.resolve(userId) flatMap {
           user =>

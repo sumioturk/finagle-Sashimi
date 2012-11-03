@@ -32,6 +32,8 @@ object Maguro extends App {
     dateFormat.getTime + sashimi
   }
 
+
+
   private def loop(): Unit = {
     userRepo.resolveAllActive flatMap {
       users =>
