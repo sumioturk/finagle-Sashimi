@@ -444,4 +444,39 @@ SASHIMI is the only way that you can automatically delete your tweets in damn ac
       99%   1581
      100%   3673 (longest request)
 
+___
+
+
+`ab -n 1000 -c 100 "http://sashimiquality.com:9000/login?name=name&pass=password"`
+
+
+    Concurrency Level:      100
+    Time taken for tests:   2.249 seconds
+    Complete requests:      1000
+    Failed requests:        0
+    Write errors:           0
+    Total transferred:      748000 bytes
+    HTML transferred:       97000 bytes
+    Requests per second:    444.67 [#/sec] (mean)
+    Time per request:       224.887 [ms] (mean)
+    Time per request:       2.249 [ms] (mean, across all concurrent requests)
+    Transfer rate:          324.82 [Kbytes/sec] received
+
+    Connection Times (ms)
+                  min  mean[+/-sd] median   max
+    Connect:        0   31 167.9      0    1001
+    Processing:    21  183  54.8    177     363
+    Waiting:        6  183  54.9    177     363
+    Total:         29  213 175.1    181    1211
+
+    Percentage of the requests served within a certain time (ms)
+      50%    181
+      66%    216
+      75%    233
+      80%    241
+      90%    259
+      95%    295
+      98%   1168
+      99%   1182
+     100%   1211 (longest request)
 
