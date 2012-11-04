@@ -79,7 +79,7 @@ If this API is called from web-browser whose cookie is enabled, cookie, `Sashimi
 ### Response 
 
 
-    HTTP/1.1 200 OK
+	HTTP/1.1 200 OK
 	Content-Type: application/json;charset=UTF-8
 	Set-Cookie: SashimiSessionKey=w7QyH9b8Ke+zIK5LBdWnTmM7jcE=_ea3456f0-263f-11e2-b0c3-525405014302_1352006672863;
 	Content-Length: 97
@@ -140,6 +140,7 @@ Activate account with `oauth_token` and `oauth_verifier` given by `oauth_url`.
 `POST` `http://sashimiquality.com:9000/oauth`
 - `oauth_token`: OAuth token
 - `oauth_verifier`: OAuth Verifier
+- `key`: session key
 
 ### Response
 
@@ -173,9 +174,12 @@ Update sashimi quality a.k.a lifetime of your tweets.
 ### Parameters
 `POST` `http://sashimiqulity.com:9000/update_sashimi`
 - `sashimi`: new sashimi quality in minutes, `[1-9]+[0-9]`
+- `key`: session key
 
 ### Response
 `sashimi` field is updated.
+
+
     HTTP/1.1 200 OK
     Content-Type: application/json;charset=UTF-8
     Content-Length: 542
@@ -203,10 +207,13 @@ ___
 You can specify `Regular Expression`. Tweets contains matches is excluded from deletion. 
 ### Parameters
 `POST` `http://sashimiqulity.com:9000/update_escape_term`
-- `sashimi`: new sashimi quality in minutes, `Regular Expression`
+- `escape_term`: new sashimi quality in minutes, `Regular Expression`
+- `key`: session key
 
 ### Response
 `escape_term` field updated.
+
+
     HTTP/1.1 200 OK
     Content-Type: application/json;charset=UTF-8
     Content-Length: 542
@@ -233,6 +240,14 @@ You can specify `Regular Expression`. Tweets contains matches is excluded from d
 ___
 [[back to the list]](#apis)
 ## Toggle automatic deletion [[back to the list]](#apis)
+Toggle automatic deletion for tweets from now.
+### Parameters
+`GET` `http://sashimiqulity.com:9000/toggle`
+- `key`: session key
+
+### Response
+`is_active` field updated.
+
 
     HTTP/1.1 200 OK
     Content-Type: application/json;charset=UTF-8
@@ -247,7 +262,7 @@ ___
        "sashimi":"13",
        "escape_term":"",
        "is_premium":true,
-       "is_active":false,
+       "is_active":true,
        "is_8th":false,
        "request_token":"4tv4uUVpyf2kAfCRvDTisar9OieZ2ENa1uvYdfBBjI",
        "request_token_secret":"kXQ5R8NSIeXlptZsUl9J3EiwGNvgXidvIdWwfM2sY",
@@ -260,6 +275,15 @@ ___
 ___
 [[back to the list]](#apis)
 ## Toggle 8th grader mode [[back to the list]](#apis)
+Toggle automatic deletion of ALL tweets including tweets in the past.
+
+### Parameters
+activate `GET` `http://sashimiqulity.com:9000/8`
+deactivate `GET` `http://sashimiqulity.com:9000/9`
+- `key`: session key
+
+### Response
+`is8th` field updated.
 
     HTTP/1.1 200 OK
     Content-Type: application/json;charset=UTF-8
@@ -275,7 +299,7 @@ ___
        "escape_term":"",
        "is_premium":true,
        "is_active":false,
-       "is_8th":false,
+       "is_8th":true,
        "request_token":"4tv4uUVpyf2kAfCRvDTisar9OieZ2ENa1uvYdfBBjI",
        "request_token_secret":"kXQ5R8NSIeXlptZsUl9J3EiwGNvgXidvIdWwfM2sY",
        "access_token":"hgeBsfffVhdh52SBthwwdCXgdfbje",
@@ -286,7 +310,14 @@ ___
 
 ___
 [[back to the list]](#apis)
-## Tweet via Sashimi [[back to the list]](#apis)
+
+## Tweet via Sashimi @deprecated [[back to the list]](#apis)
+Tweet via Sashimi. 
+### Parameters 
+- `status`: status message, `.+`
+- `key`: session key
+
+
 
 ___
 [[back to the list]](#apis)
