@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory
 object Wasabi extends App {
 
   val config = Eval[SashimiConfig](new File(args(0)))
-  val logger = LoggerFactory.getLogger(Maguro.getClass)
+  val logger = LoggerFactory.getLogger(Wasabi.getClass)
   val commons = new CommonService(config)
   val userRepo = new UserFutureRepository(commons.redis)
   val sashimiRepo = new SashimiFutureRepository(commons.redis)
@@ -37,7 +37,6 @@ object Wasabi extends App {
   }
 
   private def loop(): Unit = {
-    logger.debug("Called")
     sashimiRepo.sRange(
       Time.fromMilliseconds(0),
       Time.now,

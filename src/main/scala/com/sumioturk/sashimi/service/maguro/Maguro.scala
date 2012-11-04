@@ -35,7 +35,6 @@ object Maguro extends App {
 
 
   private def loop(): Unit = {
-    logger.debug("Called")
     userRepo.resolveAllActive flatMap {
       users =>
         Future.join(
@@ -51,7 +50,7 @@ object Maguro extends App {
               Future(twitterRequest.send().getBody) onSuccess {
                 response =>
                   val json = parse(response)
-                  if ((json \\ "error").children.length != 0) {
+                  if ((json \\ "id_str").children.length == 0) {
                     logger.info(compact(render(json)))
                     Future.None
                   } else {
