@@ -410,3 +410,38 @@ List of Errors:
 # Footnote
 SASHIMI is the only way that you can automatically delete your tweets in damn accurate timing. Fault tolerance architecture guarantees damn certainty of elimination of every single shit you tweeted. This is indeed the only way to keep your tweets fresh and Sashimi Quality. 
 
+# Benchmark Results
+
+`ab -n 10000 -c 500 -v 0 -C "SashimiSessionKey=SessionKey;" "http://sashimiquality.com:9000/8"`
+
+    Concurrency Level:      500
+    Time taken for tests:   11.020 seconds 
+    Complete requests:      10000
+    Failed requests:        0
+    Write errors:           0
+    Total transferred:      5190000 bytes
+    HTML transferred:       4330000 bytes
+    Requests per second:    907.44 [#/sec] (mean)
+    Time per request:       551.001 [ms] (mean)
+    Time per request:       1.102 [ms] (mean, across all concurrent requests)
+    Transfer rate:          459.92 [Kbytes/sec] received
+    
+    Connection Times (ms)
+                  min  mean[+/-sd] median   max
+    Connect:        0   40 261.4      5    3009
+    Processing:    21  499 144.6    503    1082
+    Waiting:       18  495 144.5    498    1081
+    Total:         62  540 307.3    513    3673
+
+    Percentage of the requests served within a certain time (ms)
+      50%    513
+      66%    541
+      75%    563
+      80%    579
+      90%    690
+      95%    850
+      98%    954
+      99%   1581
+     100%   3673 (longest request)
+
+
