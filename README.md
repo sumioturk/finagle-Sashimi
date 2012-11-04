@@ -335,6 +335,20 @@ Tweet via Sashimi.
 ___
 [[back to the list]](#apis)
 
+# Errors
+Errors are represented by json: 
+
+    {"error" : "Error Message"}
+
+List of Errors:
+
+- `404` "User Not Found"
+- `409` "User Already Exists"
+- `403` "Invalid Params"
+- `403` "Authentication Required"
+- `401` "Could Not Authorize"
+- `403` "Expired Cookie"
+- `402` "Premium Only"
 
 
 # Footnote
