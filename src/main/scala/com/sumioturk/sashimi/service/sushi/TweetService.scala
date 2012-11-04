@@ -60,7 +60,7 @@ class TweetService(commons: CommonService) extends Service[Request, Response] {
                     )
                     userRepo.store(newUser) flatMap {
                       _ =>
-                        JsonResponse(toJson(Tweeted), OK)
+                        JsonResponse(json, OK)
                     }
                   case false =>
                     JsonResponse(toJson(InvalidParams), FORBIDDEN)
