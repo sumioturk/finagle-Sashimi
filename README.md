@@ -58,12 +58,27 @@ Register a new user to `SASHIMI`.
        "request_token_secret":"kXQ5R8NSIeXlptZsUl9J3EiwGNvgXidvIdWwfM2sY",
        "access_token":"",
        "access_token_secret":""
-   }
-
+    }
 
 ___
 [back](#apis)
+
 ## Login
+Login/Get session key. This API tries to set cookie. 
+If this API is called from web-browser whose cookie is enabled, cookie, `SashimiSessionKey` will be set.
+
+### Parameters 
+
+`http://sashimiquality.com:9000/login`
+
+- `name`: the name of user, `.+`
+- `pass`: the password, `.+`
+
+### Response 
+
+
+
+
 ___
 [back](#apis)
 ## Logout
@@ -95,3 +110,4 @@ ___
 
 # Footnote
 SASHIMI is the only way that you can automatically delete your tweets in damn accurate timing. Fault tolerance architecture guarantees damn certainty of elimination of every single shit you tweeted. This is indeed the only way to keep your tweets fresh and Sashimi Quality. 
+
