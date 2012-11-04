@@ -313,9 +313,11 @@ ___
 
 ## Tweet via Sashimi 
 Tweet via Sashimi. 
+
 ### Parameters 
 - `status`: status message, `.+`
 - `key`: session key
+
 ### Response
 
     HTTP/1.1 200 OK
@@ -323,8 +325,9 @@ Tweet via Sashimi.
     Content-Length: 22
 
     {
-	"message" : "Tweeted"
+        "message" : "Tweeted"
     }
+
 
 ___
 [[back to the list]](#apis)
