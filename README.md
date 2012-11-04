@@ -27,7 +27,7 @@ Following APIs are supported.
 - [Toggle 8th grader mode](#toggle-8th-grader-mode)
 - [Tweet via Sashimi](#tweet-via-sashimi)
 
-## Register new user [[back to the list]](#apis)
+## Register new user 
 
 Register a new user to `SASHIMI`. 
 
@@ -64,7 +64,7 @@ Register a new user to `SASHIMI`.
 ___
 [[back to the list]](#apis)
 
-## Login [[back to the list]](#apis)
+## Login 
 
 Login/Get session key. This API tries to set cookie. 
 If this API is called from web-browser whose cookie is enabled, cookie, `SashimiSessionKey` will be set.
@@ -92,7 +92,7 @@ ___
 
 [[back to the list]](#apis)
 
-## Logout [[back to the list]](#apis)
+## Logout
 
 Logout/Expire session. 
 
@@ -112,7 +112,7 @@ Logout/Expire session.
 	
 ___
 [[back to the list]](#apis)
-## Get OAuth URL [[back to the list]](#apis)
+## Get OAuth URL 
 
 Get twitter OAuth URL. Note that this URL expires after some time. 
 
@@ -133,7 +133,7 @@ Get twitter OAuth URL. Note that this URL expires after some time.
 ___
 [[back to the list]](#apis)
 
-## Activate account [[back to the list]](#apis)
+## Activate account 
 
 Activate account with `oauth_token` and `oauth_verifier` given by `oauth_url`.
 ### Parameters
@@ -168,7 +168,7 @@ Activate account with `oauth_token` and `oauth_verifier` given by `oauth_url`.
 ___
 [[back to the list]](#apis)
 
-## Update Sashimi Quality [[back to the list]](#apis)
+## Update Sashimi Quality 
 
 Update sashimi quality a.k.a lifetime of your tweets.
 ### Parameters
@@ -203,7 +203,7 @@ Update sashimi quality a.k.a lifetime of your tweets.
 
 ___
 [[back to the list]](#apis)
-## Update escape-term [[back to the list]](#apis)
+## Update escape-term 
 You can specify `Regular Expression`. Tweets contains matches is excluded from deletion. 
 ### Parameters
 `POST` `http://sashimiqulity.com:9000/update_escape_term`
@@ -239,7 +239,7 @@ You can specify `Regular Expression`. Tweets contains matches is excluded from d
 
 ___
 [[back to the list]](#apis)
-## Toggle automatic deletion [[back to the list]](#apis)
+## Toggle automatic deletion 
 Toggle automatic deletion for tweets from now.
 ### Parameters
 `GET` `http://sashimiqulity.com:9000/toggle`
@@ -274,7 +274,7 @@ Toggle automatic deletion for tweets from now.
 
 ___
 [[back to the list]](#apis)
-## Toggle 8th grader mode [[back to the list]](#apis)
+## Toggle 8th grader mode 
 Toggle automatic deletion of ALL tweets including tweets in the past.
 
 ### Parameters
@@ -311,13 +311,20 @@ deactivate `GET` `http://sashimiqulity.com:9000/9`
 ___
 [[back to the list]](#apis)
 
-## Tweet via Sashimi @deprecated [[back to the list]](#apis)
+## Tweet via Sashimi 
 Tweet via Sashimi. 
 ### Parameters 
 - `status`: status message, `.+`
 - `key`: session key
+### Response
 
+    HTTP/1.1 200 OK
+    Content-Type: application/json;charset=UTF-8
+    Content-Length: 22
 
+    {
+	"message" : "Tweeted"
+    }
 
 ___
 [[back to the list]](#apis)
