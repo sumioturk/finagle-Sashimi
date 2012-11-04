@@ -278,9 +278,12 @@ ___
 Toggle automatic deletion of ALL tweets including tweets in the past.
 
 ### Parameters
-activate `GET` `http://sashimiqulity.com:9000/8`
-deactivate `GET` `http://sashimiqulity.com:9000/9`
-- `key`: session key
+- activate `GET` `http://sashimiqulity.com:9000/8`
+- deactivate `GET` `http://sashimiqulity.com:9000/9`
+
+___
+
+-`key`: session key
 
 ### Response
 `is8th` field updated.
