@@ -13,11 +13,6 @@ or on whatever 3rd party twitter client you are currently using. You can do foll
 Sashimi is a sacred and traditional Japanese cuisine serving a fresh raw sliced fish and is thought as the most correct way to enjoy eating fish. Fishes must be extremely fresh in order to be served as Sashimi, and it has to be sliced in beautiful way; even one sloppy cut totally ruins entire Sashimi. It is not just a food on the plate. It is the art of the fragility and flow comes from its primitive magnificent appearance. 
 Tweeting is like slicing Sashimi. You slice the bit of your thoughts, feelings and or sometimes even anger and transform it into ultimate versatile form of existence: that is, the words. Although the words may remain on piece of paper or surface of the rocks or even in electromagnetic field, after some time, it will die. Those words are absolutely NOT Sashimi Quality. The words has its life. In certain time, it will die as the words even if it can be seen on the paper. If it is dead, it needs to vanish: tweets need to be deleted. Under that philosophy. We provides you a handy way. Hope you like it.
 
-
-
-
-
-
 # APIs
 Following APIs are supported.
 
@@ -34,6 +29,38 @@ Following APIs are supported.
 
 ## Register new user
 Register a new user to `SASHIMI`. 
+
+### Parameters
+`http://sashimiquality.com:9000/join`
+- `name`: a user name, `.+`
+- `pass`: a password for the user, `.+`
+- `sashimi`: sashimi quality, lifetime of your tweets in minutes, `[1-9]+[0-9]*`
+
+### Response 
+`user` model. 
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json;charset=UTF-8
+    Content-Length: 331
+
+    {
+       "id":"2",
+       "twitter_id":"",
+       "name":"name",
+       "pass":"password",
+       "last_tweet_id":"",
+       "sashimi":"13",
+       "escape_term":"",
+       "is_premium":true,
+       "is_active":false,
+       "is_8th":false,
+       "request_token":"4tv4uUVpyf2kAfCRvDTisar9OieZ2ENa1uvYdfBBjI",
+       "request_token_secret":"kXQ5R8NSIeXlptZsUl9J3EiwGNvgXidvIdWwfM2sY",
+       "access_token":"",
+       "access_token_secret":""
+   }
+
+
 ___
 [back](#apis)
 ## Login
