@@ -157,7 +157,7 @@ Activate account with `oauth_token` and `oauth_verifier` given by `oauth_url`.
        "sashimi":"13",
        "escape_term":"",
        "is_premium":true,
-       "is_active":false,
+       "is_active":true,
        "is_8th":false,
        "request_token":"4tv4uUVpyf2kAfCRvDTisar9OieZ2ENa1uvYdfBBjI",
        "request_token_secret":"kXQ5R8NSIeXlptZsUl9J3EiwGNvgXidvIdWwfM2sY",
