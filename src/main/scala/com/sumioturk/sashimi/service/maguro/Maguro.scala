@@ -35,6 +35,7 @@ object Maguro extends App {
 
 
   private def loop(): Unit = {
+    logger.debug("Called")
     userRepo.resolveAllActive flatMap {
       users =>
         Future.join(

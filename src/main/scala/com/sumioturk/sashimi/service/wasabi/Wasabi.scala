@@ -37,6 +37,7 @@ object Wasabi extends App {
   }
 
   private def loop(): Unit = {
+    logger.debug("Called")
     sashimiRepo.sRange(
       Time.fromMilliseconds(0),
       Time.now,
