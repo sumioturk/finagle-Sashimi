@@ -327,9 +327,65 @@ Tweet via Sashimi.
     Content-Type: application/json;charset=UTF-8
     Content-Length: 22
 
-    {
-        "message" : "Tweeted"
-    }
+   {
+	"in_reply_to_user_id_str": null,
+	"retweet_count": 0,
+	"contributors": null,
+	"truncated": false,
+	"text": "yello",
+	"geo": null,
+	"retweeted": false,
+	"in_reply_to_screen_name": null,
+	"id_str": "265026331409018880",
+	"in_reply_to_user_id": null,
+	"in_reply_to_status_id": null,
+	"created_at": "Sun Nov 04 09:42:56 +0000 2012",
+	"place": null,
+	"user": {
+		"id": 46686525,
+		"profile_background_image_url": "http://a0.twimg.com/images/themes/theme1/bg.png",
+		"screen_name": "sumioturk",
+		"profile_link_color": "0084B4",
+		"default_profile_image": false,
+		"created_at": "Fri Jun 12 16:20:43 +0000 2009",
+		"contributors_enabled": false,
+		"friends_count": 100,
+		"time_zone": "Tokyo",
+		"favourites_count": 104,
+		"utc_offset": 32400,
+		"profile_use_background_image": true,
+		"url": "http://sashimiquality.com/sashimi",
+		"geo_enabled": false,
+		"lang": "en",
+		"profile_image_url": "http://a0.twimg.com/profile_images/2775421609/c5f11496176bd75fa6f8d64cf00f1a43_normal.jpeg",
+		"profile_text_color": "333333",
+		"name": "???? ??????",
+		"profile_background_image_url_https": "https://si0.twimg.com/images/themes/theme1/bg.png",
+		"description": "Hi, I'm Sashimi Quality.\r\n",
+		"protected": false,
+		"profile_sidebar_border_color": "C0DEED",
+		"followers_count": 99,
+		"is_translator": false,
+		"default_profile": true,
+		"profile_background_tile": false,
+		"location": "Armteriyask, Russia",
+		"profile_sidebar_fill_color": "DDEEF6",
+		"following": false,
+		"statuses_count": 93,
+		"follow_request_sent": false,
+		"listed_count": 13,
+		"id_str": "46686525",
+		"profile_background_color": "C0DEED",
+		"notifications": false,
+		"verified": false,
+		"profile_image_url_https": "https://si0.twimg.com/profile_images/2775421609/c5f11496176bd75fa6f8d64cf00f1a43_normal.jpeg"
+	},
+	"coordinates": null,
+	"source": "<a href=\"http://sashimiquality.net\" rel=\"nofollow\">SashimiQuality</a>",
+	"in_reply_to_status_id_str": null,
+	"favorited": false,
+	"id": 265026331409018880
+	}
 
 
 ___
