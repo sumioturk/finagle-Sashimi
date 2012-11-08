@@ -3,7 +3,7 @@ package com.sumioturk.sashimi.domain.infrastructure
 import infrastructure.{UserFutureRepository, RedisKeys}
 import org.specs2.mutable.Specification
 import org.specs2.mock.Mockito
-import com.twitter.finagle.redis.Client
+import com.twitter.finagle.redis.{TransactionalClient, Client}
 import org.jboss.netty.buffer.ChannelBuffers._
 import domain.User
 import com.twitter.util.Future
@@ -47,7 +47,7 @@ class UserFutureRepositoryTest extends Specification with Mockito {
       accessTokenSecret = "ats"
     )
 
-  val mockRedis = mock[Client]
+  val mockRedis = mock[TransactionalClient]
 
   mockRedis.hGet(
     copiedBuffer(RedisKeys.Users),
