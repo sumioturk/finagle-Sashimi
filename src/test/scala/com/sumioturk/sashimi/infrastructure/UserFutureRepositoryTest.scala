@@ -10,7 +10,7 @@ import com.twitter.util.Future
 
 
 class UserFutureRepositoryTest extends Specification with Mockito {
-  val userId = copiedBuffer("1".getBytes)
+  val userId = "1"
   val user1 =
     User(
       id = "1",
@@ -49,30 +49,27 @@ class UserFutureRepositoryTest extends Specification with Mockito {
 
   val mockRedis = mock[TransactionalClient]
 
-  mockRedis.hGet(
-    copiedBuffer(RedisKeys.Users),
-    userId
+  mockRedis.get(
+    copiedBuffer(RedisKeys.Users(userId))
   ) returns
     Future(Option(copiedBuffer(user1.toJsonString.getBytes)))
 
-  mockRedis.hGetAll(
-    copiedBuffer(RedisKeys.Users)
+  mockRedis.keys(
+    copiedBuffer(RedisKeys.Users("*"))
   ) returns
     Future(Seq(
-      (userId, copiedBuffer(user1.toJsonString.getBytes)),
-      (copiedBuffer("2".getBytes), copiedBuffer(user2.toJsonString.getBytes))
+      copiedBuffer(user1.toJsonString.getBytes),
+      copiedBuffer("2".getBytes), copiedBuffer(user2.toJsonString.getBytes)
     ))
 
-  mockRedis.hSet(
-    copiedBuffer(RedisKeys.Users),
-    userId,
+  mockRedis.set(
+    copiedBuffer(RedisKeys.Users(userId)),
     copiedBuffer(user1.toJsonString.getBytes)
   ) returns
     Future.value(1L)
 
-  mockRedis.hDel(
-    copiedBuffer(RedisKeys.Users),
-    Seq(userId)
+  mockRedis.del(
+    copiedBuffer(RedisKeys.Users(userId)) :: Nil
   ) returns
     Future.value(1L)
 

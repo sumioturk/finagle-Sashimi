@@ -1,7 +1,7 @@
 package infrastructure
 
 object RedisKeys {
-  def Users = "Users".getBytes()
+  def Users(id: String) = ("Users-" + id).getBytes()
 
   def UserSessions = "UserSessions".getBytes()
 
@@ -13,7 +13,4 @@ object RedisKeys {
 
   def Last = "Last".getBytes()
 
-  def UserRequestTokens = "UserRequestTokens".getBytes()
-
-  def UserRequestTokenSecrets = "UserRequestTokenSecrets".getBytes()
 }

@@ -12,9 +12,8 @@ class UserFutureRepository(client: TransactionalClient) extends FutureRepository
   val redis = newRedisClient
 
   def resolve(id: String) = {
-    redis.hGet(
-      copiedBuffer(RedisKeys.Users),
-      copiedBuffer(id.getBytes)
+    redis.get(
+      copiedBuffer(RedisKeys.Users(id))
     ) flatMap {
       case Some(userCB) =>
         Future(User.fromJsonString(new String(userCB.array())))
@@ -32,14 +31,15 @@ class UserFutureRepository(client: TransactionalClient) extends FutureRepository
   }
 
   def resolveAll = {
-    redis.hGetAll(
-      copiedBuffer(RedisKeys.Users)
+    redis.keys(
+      copiedBuffer(RedisKeys.Users("*"))
     ) flatMap {
       seq =>
         Future(
           seq map {
             userCB =>
-              User.fromJsonString(new String(userCB._2.array()))
+              val l = new String(userCB.array())
+              User.fromJsonString(new String(userCB.array()))
           } toList
         )
     }
@@ -53,30 +53,24 @@ class UserFutureRepository(client: TransactionalClient) extends FutureRepository
   }
 
   def store(user: User) = {
-    redis.transaction(Seq(
-      Watch(copiedBuffer(RedisKeys.Users) :: Nil),
-      HSet(
-        copiedBuffer(RedisKeys.Users),
-        copiedBuffer(user.id.getBytes),
-        copiedBuffer(user.toJsonString.getBytes)
-      )
-    )) flatMap {
+    redis.set(
+      copiedBuffer(RedisKeys.Users(user.id)),
+      copiedBuffer(user.toJsonString.getBytes)
+    ) flatMap {
       _ =>
         Future.None
     }
   }
 
   def purge(id: String) = {
-    redis.hDel(
-      copiedBuffer(RedisKeys.Users),
-      Seq(copiedBuffer(id.getBytes))
+    redis.del(
+      copiedBuffer(RedisKeys.Users(id)) :: Nil
     )
   }
 
   def exists(user: User) = {
-    redis.hGet(
-      copiedBuffer(RedisKeys.Users),
-      copiedBuffer(user.id.getBytes)
+    redis.get(
+      copiedBuffer(RedisKeys.Users(user.id))
     ) flatMap {
       case Some(sth) =>
         Future(true)
@@ -95,7 +89,6 @@ class UserFutureRepository(client: TransactionalClient) extends FutureRepository
         }
     }
   }
-
 
 
   def newRedisClient = client

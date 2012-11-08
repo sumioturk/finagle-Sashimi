@@ -36,8 +36,6 @@ object Maguro extends App {
 
 
   private def loop(): Unit = {
-    commons.redis.watch(copiedBuffer(RedisKeys.Users) :: Nil) flatMap {
-      _ =>
     userRepo.resolveAllActive flatMap {
       users =>
         Future.join(
@@ -126,7 +124,7 @@ object Maguro extends App {
                 e =>
                   e.printStackTrace()
               }
-          })}
+          })
     } ensure wait(loop, config.maguroPollingInterval)
   }
 
