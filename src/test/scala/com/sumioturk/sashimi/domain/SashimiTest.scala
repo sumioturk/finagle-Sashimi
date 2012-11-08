@@ -14,7 +14,7 @@ class SashimiTest extends Specification {
         ttl = Time.fromMilliseconds(System.currentTimeMillis),
         retries = 5
       )
-      //Sashimi.fromJsonString(sashimi.toJsonString) must_== sashimi
+      Sashimi.fromJsonString(sashimi.toJsonString) must_== sashimi
       1 must_== 1
     }
   }

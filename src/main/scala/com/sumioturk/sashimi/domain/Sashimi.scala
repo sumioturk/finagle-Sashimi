@@ -18,7 +18,7 @@ case class Sashimi
       ("user_id" -> userId) ~
         ("tweet_id" -> tweetId) ~
         ("status" -> status) ~
-        ("ttl" -> ttl.toDate.toString) ~
+        ("ttl" -> ttl.format("EEE MMM dd HH:mm:ss ZZZZZ yyyy")) ~
         ("retries" -> retries)
     json
   }

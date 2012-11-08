@@ -21,6 +21,6 @@ trait SashimiConfig {
   val contentType: String
   val disposalTimeInMillis: Long
   val retryInterval: Long
-  val numberOfMaxRetries: Int
+  val maxRetries: Int
 }
 

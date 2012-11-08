@@ -40,9 +40,10 @@ object Wasabi extends App {
     sashimiRepo.sRange(
       Time.fromMilliseconds(0),
       Time.now,
-      config.numberOfMaxRetries
+      config.maxRetries
     ) flatMap {
       sashimis =>
+        val l = sashimis
         Future.join(
           sashimis map {
             sashimi =>
@@ -71,7 +72,7 @@ object Wasabi extends App {
                           tweetId = sashimi.tweetId
                         )
                         Future.join(Seq(
-                          if (newSashimi.retries <= config.numberOfMaxRetries) {
+                          if (newSashimi.retries <= config.maxRetries) {
                             sashimiRepo.sAdd(newSashimi)
                           } else {
                             Future.None
