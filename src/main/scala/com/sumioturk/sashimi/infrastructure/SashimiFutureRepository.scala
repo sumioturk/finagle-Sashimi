@@ -33,10 +33,7 @@ class SashimiFutureRepository(client: Client) extends SortedFutureRepository[Sas
       None
     ) flatMap {
       zRangeResult =>
-        val k = zRangeResult.entries.map(a => Sashimi.fromJsonString(new String(a.array)))
-        k
         val l = zRangeResult.asTuples.map(a => Sashimi.fromJsonString(new String(a._1.array))).toList
-        println(zRangeResult.asTuples())
         Future(l)
     }
   }

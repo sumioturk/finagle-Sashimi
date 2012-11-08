@@ -67,7 +67,7 @@ object Maguro extends App {
                         status = status,
                         ttl =
                           if (user.is8th) {
-                            Time.now
+                            Time.fromMilliseconds(0)
                           } else {
                             Time.fromMilliseconds(
                               getDateOfDisposal(
