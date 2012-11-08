@@ -2,7 +2,7 @@ package maguro
 
 
 import com.twitter.util.{Eval, Time, Future}
-import infrastructure.{SashimiFutureRepository, UserFutureRepository}
+import infrastructure.{RedisKeys, SashimiFutureRepository, UserFutureRepository}
 import domain.{Sashimi, User}
 import org.scribe.model.{Verb, OAuthRequest, Token}
 import net.liftweb.json._
@@ -12,6 +12,7 @@ import config.SashimiConfig
 import java.io.File
 import com.sumioturk.sashimi.service.CommonService
 import org.slf4j.LoggerFactory
+import org.jboss.netty.buffer.ChannelBuffers._
 
 
 object Maguro extends App {
@@ -35,6 +36,8 @@ object Maguro extends App {
 
 
   private def loop(): Unit = {
+    commons.redis.watch(copiedBuffer(RedisKeys.Users) :: Nil) flatMap {
+      _ =>
     userRepo.resolveAllActive flatMap {
       users =>
         Future.join(
@@ -123,7 +126,7 @@ object Maguro extends App {
                 e =>
                   e.printStackTrace()
               }
-          })
+          })}
     } ensure wait(loop, config.maguroPollingInterval)
   }
 

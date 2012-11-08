@@ -96,5 +96,7 @@ class UserFutureRepository(client: TransactionalClient) extends FutureRepository
     }
   }
 
+
+
   def newRedisClient = client
 }
