@@ -92,6 +92,6 @@ object Wasabi extends App {
     } ensure wait(loop, config.wasabiPollingInterval)
   }
 
-  
+
   loop()
 }
