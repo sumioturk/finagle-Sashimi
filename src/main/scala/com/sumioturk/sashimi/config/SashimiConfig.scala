@@ -24,3 +24,22 @@ trait SashimiConfig {
   val maxRetries: Int
 }
 
+object FakeSashimiConfig extends SashimiConfig {
+  val wasabiPollingInterval = 1000
+  val maguroPollingInterval = 10000
+  val sushiPort = 9000
+  val redisHostPort = "localhost:6379"
+  val twitterApiKey = "3yMyK3UJJYVTgnZIPWkqUA"
+  val twitterApiKeySecret = "0qoaluSJg4MoRIncQoMR049ZZnuKkQhpI1rWtUJu2Q"
+  val twitterApiCallbackURL = "http://localhost:9000/oauth"
+  val redisHostConnectionLimit = 50
+  val twitterApiDestroyURL = "https://api.twitter.com/1.1/statuses/destroy/%s.json"
+  val twitterApiUpdateURL = "https://api.twitter.com/1.1/statuses/update.json"
+  val twitterApiTimelineURL = "https://api.twitter.com/1.1/statuses/user_timeline.json"
+  val sashimiMaginification = 1000 * 60
+  val contentTypeEncoding = "UTF-8"
+  val contentType = "application/json"
+  val disposalTimeInMillis = 5 * 60 * 1000L
+  val retryInterval = 60 * 1000L
+  val maxRetries = 4
+}

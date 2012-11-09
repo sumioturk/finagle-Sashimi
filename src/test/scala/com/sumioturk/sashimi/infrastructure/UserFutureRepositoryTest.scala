@@ -1,19 +1,21 @@
 package com.sumioturk.sashimi.domain.infrastructure
 
-import infrastructure.{UserFutureRepository, RedisKeys}
+import config.FakeSashimiConfig
+import infrastructure.UserFutureRepository
 import org.specs2.mutable.Specification
 import org.specs2.mock.Mockito
-import com.twitter.finagle.redis.{TransactionalClient, Client}
-import org.jboss.netty.buffer.ChannelBuffers._
 import domain.User
-import com.twitter.util.Future
+import com.sumioturk.sashimi.service.CommonService
+import com.twitter.util.Duration
+import java.util.concurrent.TimeUnit
 
 
 class UserFutureRepositoryTest extends Specification with Mockito {
+  sequential
   val userId = "1"
   val user1 =
     User(
-      id = "1",
+      id = "t1",
       twitterId = "1",
       is8th = false,
       name = "name",
@@ -31,7 +33,7 @@ class UserFutureRepositoryTest extends Specification with Mockito {
 
   val user2 =
     User(
-      id = "2",
+      id = "t2",
       is8th = false,
       twitterId = "1",
       name = "name",
@@ -47,65 +49,107 @@ class UserFutureRepositoryTest extends Specification with Mockito {
       accessTokenSecret = "ats"
     )
 
-  val mockRedis = mock[TransactionalClient]
+  val repo = new UserFutureRepository(new CommonService(FakeSashimiConfig).redis)
 
-  mockRedis.get(
-    copiedBuffer(RedisKeys.Users(userId))
-  ) returns
-    Future(Option(copiedBuffer(user1.toJsonString.getBytes)))
-
-  mockRedis.keys(
-    copiedBuffer(RedisKeys.Users("*"))
-  ) returns
-    Future(Seq(
-      copiedBuffer(user1.toJsonString.getBytes),
-      copiedBuffer("2".getBytes), copiedBuffer(user2.toJsonString.getBytes)
-    ))
-
-  mockRedis.set(
-    copiedBuffer(RedisKeys.Users(userId)),
-    copiedBuffer(user1.toJsonString.getBytes)
-  ) returns
-    Future.value(1L)
-
-  mockRedis.del(
-    copiedBuffer(RedisKeys.Users(userId)) :: Nil
-  ) returns
-    Future.value(1L)
-
-  "UserFutureRepository.resolve" should {
-    " return the user identified by given id " in {
-      val target = new UserFutureRepository(null) {
-        override def newRedisClient = mockRedis
-      }
-      target.resolve("1").get must_== user1
+  "store" should {
+    "returns ()" in {
+      repo.store(user1).get must_==()
     }
   }
 
-  "UserFutureRepository.resolveAll" should {
-    " return all users in the repository " in {
-      val target = new UserFutureRepository(null) {
-        override def newRedisClient = mockRedis
-      }
-      target.resolveAll.get must_== List(user1, user2)
+  "store" should {
+    "returns ()" in {
+      repo.store(user2).get must_==()
     }
   }
 
-  "UserFutureRepository.store" should {
-    " return 1L " in {
-      val target = new UserFutureRepository(null) {
-        override def newRedisClient = mockRedis
-      }
-      target.store(user1).get must_== 1L
+  "resolve" should {
+    "returns user identified by gevin id" in {
+      repo.resolve("t1").get must_== user1
     }
   }
 
-  "UserFutureRepository.purge" should {
-    " return 1L " in {
-      val target = new UserFutureRepository(null) {
-        override def newRedisClient = mockRedis
+  "resolve" should {
+    "returns user identified by gevin id" in {
+      repo.resolve("t2").get must_== user2
+    }
+  }
+
+  "resolveAll" should {
+    "returns all users in the db" in {
+      repo.resolveAll.get.filter(u => u.id.contains("t")) must_== List(user1, user2)
+    }
+  }
+
+  "resolveAllActive" should {
+    "returns all active users" in {
+      repo.resolveAllActive.get.filter(u => u.id.contains("t")) must_== List(user1)
+    }
+  }
+
+  "resolveByName" should {
+    "returns users with given name" in {
+      repo.resolveByName("name").get.filter(u => u.id.contains("t")) must_== List(user1, user2)
+    }
+  }
+
+  "update" should {
+    "return ()" in {
+      try {
+        repo.update("t2") {
+          user: User =>
+            val past = System.currentTimeMillis()
+            repo.store(user1).get(Duration(2000, TimeUnit.MILLISECONDS))
+            val now = System.currentTimeMillis()
+            if (now - past > 2000) {
+              throw new Exception()
+            }
+            User(
+              id = user.id,
+              twitterId = user.twitterId,
+              name = user.name,
+              sashimi = user.sashimi,
+              lastTweetId = user.lastTweetId,
+              pass = user.pass,
+              isPremium = user.isPremium,
+              isActive = true,
+              is8th = user.is8th,
+              escapeTerm = user.escapeTerm,
+              requestToken = user.requestToken,
+              requestTokenSecret = user.requestTokenSecret,
+              accessToken = user.accessToken,
+              accessTokenSecret = user.accessTokenSecret
+            )
+        }.get
+        1 must_== 0
+      } catch {
+        case e: Exception =>
+          1 must_== 1
       }
-      target.purge("1").get must_== 1L
+    }
+  }
+
+  "update" should {
+    "timedout" in {
+      repo.update("t1") {
+        user: User =>
+          User(
+            id = user.id,
+            twitterId = user.twitterId,
+            name = user.name,
+            sashimi = user.sashimi,
+            lastTweetId = user.lastTweetId,
+            pass = user.pass,
+            isPremium = user.isPremium,
+            isActive = user.isActive,
+            is8th = true,
+            escapeTerm = user.escapeTerm,
+            requestToken = user.requestToken,
+            requestTokenSecret = user.requestTokenSecret,
+            accessToken = user.accessToken,
+            accessTokenSecret = user.accessTokenSecret
+          )
+      }.get must_==()
     }
   }
 }

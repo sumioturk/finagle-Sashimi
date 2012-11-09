@@ -6,9 +6,9 @@ import com.twitter.finagle.redis.Client
 trait FutureRepository[T] {
   def resolve(id: String): Future[T]
 
-  def resolveAll: Future[List[T]]
+  def resolveAll: Future[Seq[T]]
 
-  def store(entity: T): Future[_]
+  def store(entity: T): Future[Unit]
 
   def purge(id: String): Future[_]
 

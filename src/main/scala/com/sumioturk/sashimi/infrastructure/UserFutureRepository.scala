@@ -7,11 +7,12 @@ import org.jboss.netty.buffer.ChannelBuffers._
 import com.twitter.finagle.redis.{TransactionalClient, Client}
 import com.twitter.finagle.redis.protocol._
 import scala.Some
+import scala.collection.JavaConverters._
 
 class UserFutureRepository(client: TransactionalClient) extends FutureRepository[User] {
   val redis = newRedisClient
 
-  def resolve(id: String) = {
+  def resolve(id: String): Future[User] = {
     redis.get(
       copiedBuffer(RedisKeys.Users(id))
     ) flatMap {
@@ -22,7 +23,7 @@ class UserFutureRepository(client: TransactionalClient) extends FutureRepository
     }
   }
 
-  def resolveByName(name: String) = {
+  def resolveByName(name: String): Future[Seq[User]] = {
     resolveAll flatMap {
       users =>
         val user = users.filter(u => u.name == name)
@@ -30,45 +31,52 @@ class UserFutureRepository(client: TransactionalClient) extends FutureRepository
     }
   }
 
-  def resolveAll = {
+  def resolveAll: Future[Seq[User]] = {
     redis.keys(
       copiedBuffer(RedisKeys.Users("*"))
     ) flatMap {
-      seq =>
-        Future(
-          seq map {
-            userCB =>
-              val l = new String(userCB.array())
-              User.fromJsonString(new String(userCB.array()))
-          } toList
+      keys =>
+        Future.collect(
+          keys map (
+            key =>
+              redis.get(key) flatMap {
+                userCB =>
+                  Future(
+                    User
+                      .fromJsonString(
+                      new String(userCB.getOrElse(throw new EntityNotFoundException).array())
+                    )
+                  )
+              }
+            )
         )
     }
   }
 
-  def resolveAllActive = {
+  def resolveAllActive: Future[Seq[User]] = {
     resolveAll flatMap {
       users =>
         Future(users.filter(_.isActive))
     }
   }
 
-  def store(user: User) = {
+  def store(user: User): Future[Unit] = {
     redis.set(
       copiedBuffer(RedisKeys.Users(user.id)),
       copiedBuffer(user.toJsonString.getBytes)
     ) flatMap {
       _ =>
-        Future.None
+        Future.Unit
     }
   }
 
-  def purge(id: String) = {
+  def purge(id: String): Future[_] = {
     redis.del(
       copiedBuffer(RedisKeys.Users(id)) :: Nil
     )
   }
 
-  def exists(user: User) = {
+  def exists(user: User): Future[Boolean] = {
     redis.get(
       copiedBuffer(RedisKeys.Users(user.id))
     ) flatMap {
@@ -80,7 +88,7 @@ class UserFutureRepository(client: TransactionalClient) extends FutureRepository
   }
 
   // Not a good idea for performance sake.
-  def isUniqueName(name: String) = {
+  def isUniqueName(name: String): Future[Boolean] = {
     resolveAll flatMap {
       users =>
         users.filter(u => u.name == name).length match {
@@ -90,6 +98,20 @@ class UserFutureRepository(client: TransactionalClient) extends FutureRepository
     }
   }
 
+  def update(id: String)(f: User => User): Future[Unit] = {
+    redis.watch(
+      copiedBuffer(RedisKeys.Users(id)) :: Nil
+    ) flatMap {
+      _ =>
+        resolve(id) flatMap {
+          readUser =>
+            store(f(readUser)) flatMap {
+              _ =>
+                redis.unwatch() flatMap (_ => Future.Unit)
+            }
+        }
+    }
+  }
 
   def newRedisClient = client
 }
