@@ -34,7 +34,6 @@ object Maguro extends App {
   }
 
 
-
   private def loop(): Unit = {
     userRepo.resolveAllActive flatMap {
       users =>
@@ -92,32 +91,35 @@ object Maguro extends App {
                         }
                       })
 
-                    val newUser = User(
-                      id = user.id,
-                      is8th = user.is8th,
-                      twitterId = user.twitterId,
-                      name = user.name,
-                      pass = user.pass,
-                      lastTweetId = if (sashimis.isEmpty) {
-                        user.lastTweetId
-                      } else {
-                        sashimis.maxBy(_.tweetId).tweetId
-                      },
-                      sashimi = user.sashimi,
-                      isPremium = user.isPremium,
-                      isActive = user.isActive,
-                      escapeTerm = user.escapeTerm,
-                      requestToken = user.requestToken,
-                      requestTokenSecret = user.requestTokenSecret,
-                      accessToken = user.accessToken,
-                      accessTokenSecret = user.accessTokenSecret
-                    )
-                    sashimis.map(s => logger.info(s.toString))
-                    Future.join(
-                      sashimis.map(s => sashimiRepo.sAdd(s)).toSeq ++ Seq(userRepo.store(newUser))
-                    ) flatMap {
+                    userRepo.update(user.id) {
+                      user =>
+                        User(
+                          id = user.id,
+                          is8th = user.is8th,
+                          twitterId = user.twitterId,
+                          name = user.name,
+                          pass = user.pass,
+                          lastTweetId = if (sashimis.isEmpty) {
+                            user.lastTweetId
+                          } else {
+                            sashimis.maxBy(_.tweetId).tweetId
+                          },
+                          sashimi = user.sashimi,
+                          isPremium = user.isPremium,
+                          isActive = user.isActive,
+                          escapeTerm = user.escapeTerm,
+                          requestToken = user.requestToken,
+                          requestTokenSecret = user.requestTokenSecret,
+                          accessToken = user.accessToken,
+                          accessTokenSecret = user.accessTokenSecret
+                        )
+                    } flatMap {
                       _ =>
-                        Future.None
+                        sashimis.map(s => logger.info(s.toString))
+                        Future.join(sashimis.map(s => sashimiRepo.sAdd(s)).toSeq) flatMap {
+                        _ =>
+                          Future.None
+                      }
                     }
                   }
               } onFailure {
