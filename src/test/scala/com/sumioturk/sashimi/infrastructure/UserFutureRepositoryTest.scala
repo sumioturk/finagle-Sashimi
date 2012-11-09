@@ -52,49 +52,49 @@ class UserFutureRepositoryTest extends Specification with Mockito {
   val repo = new UserFutureRepository(new CommonService(FakeSashimiConfig).redis)
 
   "store" should {
-    "returns ()" in {
+    "return ()" in {
       repo.store(user1).get must_==()
     }
   }
 
   "store" should {
-    "returns ()" in {
+    "return ()" in {
       repo.store(user2).get must_==()
     }
   }
 
   "resolve" should {
-    "returns user identified by gevin id" in {
+    "return user identified by gevin id" in {
       repo.resolve("t1").get must_== user1
     }
   }
 
   "resolve" should {
-    "returns user identified by gevin id" in {
+    "return user identified by gevin id" in {
       repo.resolve("t2").get must_== user2
     }
   }
 
   "resolveAll" should {
-    "returns all users in the db" in {
+    "return all users in the db" in {
       repo.resolveAll.get.filter(u => u.id.contains("t")) must_== List(user1, user2)
     }
   }
 
   "resolveAllActive" should {
-    "returns all active users" in {
+    "return all active users" in {
       repo.resolveAllActive.get.filter(u => u.id.contains("t")) must_== List(user1)
     }
   }
 
   "resolveByName" should {
-    "returns users with given name" in {
+    "return users with given name" in {
       repo.resolveByName("name").get.filter(u => u.id.contains("t")) must_== List(user1, user2)
     }
   }
 
   "update" should {
-    "return ()" in {
+    "timedout" in {
       try {
         repo.update("t2") {
           user: User =>
@@ -130,7 +130,7 @@ class UserFutureRepositoryTest extends Specification with Mockito {
   }
 
   "update" should {
-    "timedout" in {
+    "return ()" in {
       repo.update("t1") {
         user: User =>
           User(
@@ -149,7 +149,7 @@ class UserFutureRepositoryTest extends Specification with Mockito {
             accessToken = user.accessToken,
             accessTokenSecret = user.accessTokenSecret
           )
-      }.get must_==()
+      }.get must_== ()
     }
   }
 }
