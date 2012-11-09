@@ -19,32 +19,27 @@ class Graduate8thGraderService(commons: CommonService) extends Service[Request, 
 
   def apply(request: Request) = {
     val userId = request.getHeader(User.Identity)
-    userRepo.resolve(userId) flatMap {
+    userRepo.update(userId) {
       user =>
-        if (user.is8th) {
-          val eighthGrader = User(
-            id = user.id,
-            twitterId = user.twitterId,
-            name = user.name,
-            sashimi = user.sashimi,
-            lastTweetId = user.lastTweetId,
-            pass = user.pass,
-            isPremium = user.isPremium,
-            isActive = user.isActive,
-            is8th = false,
-            escapeTerm = user.escapeTerm,
-            requestToken = user.requestToken,
-            requestTokenSecret = user.requestTokenSecret,
-            accessToken = user.accessToken,
-            accessTokenSecret = user.accessTokenSecret
-          )
-          userRepo.store(eighthGrader) flatMap {
-            _ =>
-              JsonResponse(eighthGrader.toJson, OK)
-          }
-        } else {
-          JsonResponse(toJson(InvalidParams), FORBIDDEN)
-        }
+      User(
+        id = user.id,
+        twitterId = user.twitterId,
+        name = user.name,
+        sashimi = user.sashimi,
+        lastTweetId = user.lastTweetId,
+        pass = user.pass,
+        isPremium = user.isPremium,
+        isActive = user.isActive,
+        is8th = false,
+        escapeTerm = user.escapeTerm,
+        requestToken = user.requestToken,
+        requestTokenSecret = user.requestTokenSecret,
+        accessToken = user.accessToken,
+        accessTokenSecret = user.accessTokenSecret
+      )
+    } flatMap {
+      user =>
+        JsonResponse(user.toJson, OK)
     }
   }
 }

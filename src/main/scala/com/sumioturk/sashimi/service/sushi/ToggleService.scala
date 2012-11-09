@@ -13,9 +13,9 @@ class ToggleService(commons: CommonService) extends Service[Request, Response] {
 
   def apply(request: Request) = {
     val userId = request.getHeader(User.Identity)
-    userRepo.resolve(userId) flatMap {
+    userRepo.update(userId) {
       user =>
-        val newUser = User(
+        User(
           id = user.id,
           twitterId = user.twitterId,
           is8th = user.is8th,
@@ -36,10 +36,9 @@ class ToggleService(commons: CommonService) extends Service[Request, Response] {
           accessToken = user.accessToken,
           accessTokenSecret = user.accessTokenSecret
         )
-        userRepo.store(newUser) flatMap {
-          _ =>
-            JsonResponse(newUser.toJson, OK)
-        }
+    } flatMap {
+      user =>
+        JsonResponse(user.toJson, OK)
     }
   }
 }

@@ -29,9 +29,9 @@ class UpdateEscapeTermService(commons: CommonService) extends Service[Request, R
     val escapeTerm = request.getParam(User.EscapeTerm)
     Validation.isValid(Rule.NotEmpty, escapeTerm) && (isValidRegex(escapeTerm)) match {
       case true =>
-        userRepo.resolve(userId) flatMap {
+        userRepo.update(userId) {
           user =>
-            val newUser = User(
+            User(
               id = user.id,
               is8th = user.is8th,
               twitterId = user.twitterId,
@@ -47,10 +47,9 @@ class UpdateEscapeTermService(commons: CommonService) extends Service[Request, R
               accessToken = user.accessToken,
               accessTokenSecret = user.accessTokenSecret
             )
-            userRepo.store(newUser) flatMap {
-              _ =>
-                JsonResponse(newUser.toJson, OK)
-            }
+        } flatMap {
+          user =>
+            JsonResponse(user.toJson, OK)
         }
       case false =>
         JsonResponse(toJson(InvalidParams), FORBIDDEN)

@@ -20,9 +20,9 @@ class UpdateSashimiService(commons: CommonService) extends Service[Request, Resp
     val userSashimi = request.getParam(User.Sashimi)
     Validation.isValid(Rule.Number, userSashimi) match {
       case true =>
-        userRepo.resolve(userId) flatMap {
+        userRepo.update(userId) {
           user =>
-            val newUser = User(
+            User(
               id = user.id,
               is8th = user.is8th,
               twitterId = user.twitterId,
@@ -38,10 +38,9 @@ class UpdateSashimiService(commons: CommonService) extends Service[Request, Resp
               accessToken = user.accessToken,
               accessTokenSecret = user.accessTokenSecret
             )
-            userRepo.store(newUser) flatMap {
-              _ =>
-              JsonResponse(newUser.toJson, OK)
-            }
+        } flatMap {
+          user =>
+            JsonResponse(user.toJson, OK)
         }
       case false =>
         JsonResponse(toJson(InvalidParams), FORBIDDEN)
