@@ -1,5 +1,5 @@
 # SASHIMI?
-SASHIMI is a web service deleting your tweets periodically. Available on `SashimiQuality.com`.
+SASHIMI is a web service deleting your tweets periodically. Available on `http://SashimiQuality.com:9000`.
 Current build status can be seen at `http://sashimiquality.com:8080/cc.xml` using `CCMenu.app`.
 Deleting tweets is going to be much simpler than clicking 'delete' button on twitter.com 
 or on whatever 3rd party twitter client you are currently using. You can do followings:
