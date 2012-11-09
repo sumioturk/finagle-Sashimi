@@ -4,10 +4,8 @@ import domain.User
 import com.twitter.util.Future
 import com.sumioturk.sashimi.common.exception.EntityNotFoundException
 import org.jboss.netty.buffer.ChannelBuffers._
-import com.twitter.finagle.redis.{TransactionalClient, Client}
-import com.twitter.finagle.redis.protocol._
+import com.twitter.finagle.redis.TransactionalClient
 import scala.Some
-import scala.collection.JavaConverters._
 
 class UserFutureRepository(client: TransactionalClient) extends FutureRepository[User] {
   val redis = newRedisClient
@@ -98,7 +96,7 @@ class UserFutureRepository(client: TransactionalClient) extends FutureRepository
     }
   }
 
-  def update(id: String)(f: User => User): Future[Unit] = {
+  def update(id: String)(f: User => User): Future[User] = {
     redis.watch(
       copiedBuffer(RedisKeys.Users(id)) :: Nil
     ) flatMap {
@@ -107,7 +105,10 @@ class UserFutureRepository(client: TransactionalClient) extends FutureRepository
           readUser =>
             store(f(readUser)) flatMap {
               _ =>
-                redis.unwatch() flatMap (_ => Future.Unit)
+                redis.unwatch() flatMap {
+                  _: Unit =>
+                    resolve(id) flatMap (Future(_))
+                }
             }
         }
     }

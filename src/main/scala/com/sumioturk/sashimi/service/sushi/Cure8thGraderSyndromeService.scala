@@ -16,32 +16,28 @@ class Cure8thGraderSyndromeService(commons: CommonService) extends Service[Reque
 
   def apply(request: Request) = {
     val userId = request.getHeader(User.Identity)
-    userRepo.resolve(userId) flatMap {
+    userRepo.update(userId) {
       user =>
-        if (user.isActive && user.isPremium) {
-          val eighthGrader = User(
-            id = user.id,
-            twitterId = user.twitterId,
-            is8th = true,
-            name = user.name,
-            sashimi = user.sashimi,
-            lastTweetId = user.lastTweetId,
-            pass = user.pass,
-            isPremium = user.isPremium,
-            isActive = user.isActive,
-            escapeTerm = user.escapeTerm,
-            requestToken = user.requestToken,
-            requestTokenSecret = user.requestTokenSecret,
-            accessToken = user.accessToken,
-            accessTokenSecret = user.accessTokenSecret
-          )
-          userRepo.store(eighthGrader) flatMap {
-            _ =>
-              JsonResponse(eighthGrader.toJson, OK)
-          }
-        } else {
-          JsonResponse(toJson(PremiumOnly), FORBIDDEN)
-        }
+        val eighthGrader = User(
+          id = user.id,
+          twitterId = user.twitterId,
+          is8th = true,
+          name = user.name,
+          sashimi = user.sashimi,
+          lastTweetId = user.lastTweetId,
+          pass = user.pass,
+          isPremium = user.isPremium,
+          isActive = user.isActive,
+          escapeTerm = user.escapeTerm,
+          requestToken = user.requestToken,
+          requestTokenSecret = user.requestTokenSecret,
+          accessToken = user.accessToken,
+          accessTokenSecret = user.accessTokenSecret
+        )
+        eighthGrader
+    } flatMap {
+      user =>
+        JsonResponse(user.toJson, OK)
     }
   }
 }

@@ -30,7 +30,23 @@ class UserFutureRepositoryTest extends Specification with Mockito {
       accessToken = "at",
       accessTokenSecret = "ats"
     )
-
+  val user1_notactive =
+    User(
+      id = "t1",
+      twitterId = "1",
+      is8th = false,
+      name = "name",
+      pass = "pass",
+      sashimi = 1L,
+      isPremium = false,
+      isActive = false,
+      escapeTerm = "et",
+      lastTweetId = "1234",
+      requestToken = "rt",
+      requestTokenSecret = "rts",
+      accessToken = "at",
+      accessTokenSecret = "ats"
+    )
   val user2 =
     User(
       id = "t2",
@@ -130,7 +146,7 @@ class UserFutureRepositoryTest extends Specification with Mockito {
   }
 
   "update" should {
-    "return ()" in {
+    "return updated user" in {
       repo.update("t1") {
         user: User =>
           User(
@@ -141,15 +157,15 @@ class UserFutureRepositoryTest extends Specification with Mockito {
             lastTweetId = user.lastTweetId,
             pass = user.pass,
             isPremium = user.isPremium,
-            isActive = user.isActive,
-            is8th = true,
+            isActive = false,
+            is8th = user.is8th,
             escapeTerm = user.escapeTerm,
             requestToken = user.requestToken,
             requestTokenSecret = user.requestTokenSecret,
             accessToken = user.accessToken,
             accessTokenSecret = user.accessTokenSecret
           )
-      }.get must_== ()
+      }.get must_== user1_notactive
     }
   }
 }
