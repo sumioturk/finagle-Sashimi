@@ -1,7 +1,8 @@
 #Current Build
 Unstable. Possible malfunctions:
-- Update APIs mulfunctions on all updatable fields: `is8th`, `sashimi`
+- Update APIs malfunction on all updatable fields: `is8th`, `sashimi`
 
+Somehow the polling server, Maguro, overrides updated fields when it fetches tweets to be deleted. 
 
 # SASHIMI?
 SASHIMI is a web service deleting your tweets periodically. Available on `http://SashimiQuality.com:9000`.
