@@ -3,8 +3,6 @@ Unstable. Possible malfunctions:
 - Update APIs mulfunctions on all updatable fields: `is8th`, `sashimi`
 
 
-Updated field may be overrided by previous value.
-
 # SASHIMI?
 SASHIMI is a web service deleting your tweets periodically. Available on `http://SashimiQuality.com:9000`.
 Current build status can be seen at `http://sashimiquality.com:8080/cc.xml` using `CCMenu.app`.
