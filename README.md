@@ -1,8 +1,6 @@
 #Current Build
 Unstable. Possible malfunctions:
-- Update APIs mulfunctions on all updatable fields: 
--- `is8th`
--- `sashimi`
+- Update APIs mulfunctions on all updatable fields: `is8th`, `sashimi`
 
 
 Updated field may be overrided by previous value.
