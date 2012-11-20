@@ -1,4 +1,4 @@
-#Current Build
+#Current Build [![Build Status](http://s9uid.net:8080/job/Sashimi/badge/icon)](http://s9uid.net:8080/job/Sashimi/)
 Unstable. Possible malfunctions:
 - Update APIs malfunction on all updatable fields: `is8th`, `sashimi`
 
