@@ -7,6 +7,8 @@ import org.jboss.netty.handler.codec.http.HttpResponseStatus._
 import com.sumioturk.sashimi.service.CommonService
 import com.sumioturk.sashimi.service.ServiceUtilities._
 import com.twitter.finagle.Service
+import org.scribe.model.{Token, Verb, OAuthRequest}
+import net.liftweb.json._
 
 class ToggleService(commons: CommonService) extends Service[Request, Response] {
   val userRepo = new UserFutureRepository(commons.redis)
@@ -15,13 +17,20 @@ class ToggleService(commons: CommonService) extends Service[Request, Response] {
     val userId = request.getHeader(User.Identity)
     userRepo.update(userId) {
       user =>
+        val twitterRequest = new OAuthRequest(Verb.GET, commons.config.twitterApiTimelineURL)
+        val accessToken = new Token(user.accessToken, user.accessTokenSecret)
+        twitterRequest.addQuerystringParameter("user_id", user.twitterId)
+        twitterRequest.addQuerystringParameter("count", "1")
+        commons.twitter.signRequest(accessToken, twitterRequest)
+        // This is really blocking...
+        val latestTweetId = (parse(twitterRequest.send().getBody) \ "id_str").values.toString
         User(
           id = user.id,
           twitterId = user.twitterId,
           is8th = user.is8th,
           name = user.name,
           sashimi = user.sashimi,
-          lastTweetId = user.lastTweetId,
+          lastTweetId = latestTweetId,
           pass = user.pass,
           isPremium = user.isPremium,
           isActive =
